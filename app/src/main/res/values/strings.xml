@@ -3,7 +3,13 @@
     <string name="app_name">password_manager</string>
 
     <string name="greeting">Здравствуйте</string>
+    <string name="password">Пароль:</string>
     <string name="enter_password">Введите пароль</string>
     <string name="enter">Войти</string>
+
+    <string name="name">Имя:</string>
+    <string name="enter_name">Введите имя</string>
+
+    <string name="save">Сохранить</string>
 
 </resources>
