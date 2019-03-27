@@ -3,18 +3,24 @@
     <string name="app_name">Менеджер паролей</string>
 
     <string name="greeting">Здравствуйте</string>
-    <string name="password">Пароль:</string>
-    <string name="enter_password">Введите пароль</string>
     <string name="enter">Войти</string>
-
-    <string name="name">Имя:</string>
-    <string name="enter_name">Введите имя</string>
-
     <string name="save">Сохранить</string>
 
     <string name="search">Найти</string>
     <string name="search_title">Найти по названию</string>
     <string name="search_login">Найти по логину</string>
     <string name="search_email">Найти по email</string>
+
+    <string name="name">Имя:</string>
+    <string name="enter_name">Введите имя</string>
+
+    <string name="password">Пароль:</string>
+    <string name="enter_password">Введите пароль</string>
+
+    <string name="login">Логин:</string>
+    <string name="enter_login">Введите логин</string>
+
+    <string name="email">Email:</string>
+    <string name="enter_email">Введите email</string>
 
 </resources>
