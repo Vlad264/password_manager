@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        tools:ignore="UselessParent">
+
+        <EditText
+            android:id="@+id/searchByTitleEditText"
+            android:hint="@string/search_title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:inputType="textPersonName" />
+
+        <Button
+            android:id="@+id/searchByTitleButton"
+            android:text="@string/search"
+            android:background="@android:color/transparent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        tools:ignore="UselessParent">
+
+        <EditText
+            android:id="@+id/searchByLoginEditText"
+            android:hint="@string/search_login"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:inputType="textPersonName" />
+
+        <Button
+            android:id="@+id/searchByLoginButton"
+            android:text="@string/search"
+            android:background="@android:color/transparent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        tools:ignore="UselessParent">
+
+        <EditText
+            android:id="@+id/searchByEmailTitleEditText"
+            android:hint="@string/search_email"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:inputType="textEmailAddress" />
+
+        <Button
+            android:id="@+id/searchByEmailTitleButton"
+            android:text="@string/search"
+            android:background="@android:color/transparent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+    </LinearLayout>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/accountsRecyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:itemCount="12"
+        tools:spanCount="5" />
+
+
+</LinearLayout>

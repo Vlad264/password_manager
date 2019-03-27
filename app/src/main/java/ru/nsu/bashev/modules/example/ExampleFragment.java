@@ -16,7 +16,7 @@ public class ExampleFragment extends Fragment implements IExampleView {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_registration, container, false);
+        View view = inflater.inflate(R.layout.fragment_accounts_list, container, false);
 
         return view;
     }
