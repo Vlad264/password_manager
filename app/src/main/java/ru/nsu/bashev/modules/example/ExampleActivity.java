@@ -15,7 +15,7 @@ public class ExampleActivity extends SingleFragmentActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_example);
+
 
         UseCaseHandler handler = UseCaseHandler.getInstance();
         HandlePush handlePush = new HandlePush();

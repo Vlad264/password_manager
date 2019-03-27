@@ -20,21 +20,4 @@ public class ExamplePresenter implements IExamplePresenter {
     public void start() {
         //Nothing on start
     }
-
-    @Override
-    public void onButtonPush() {
-        HandlePush.RequestValues request = new HandlePush.RequestValues();
-        handler.execute(handlePush, request, new IUseCaseCallback<HandlePush.ResponseValues>() {
-            @Override
-            public void onSuccess(HandlePush.ResponseValues response) {
-                boolean flag = response.isFlag();
-                view.showToast(flag);
-            }
-
-            @Override
-            public void onError() {
-
-            }
-        });
-    }
 }

@@ -15,6 +15,7 @@ public abstract class SingleFragmentActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_single_fragment);
 
         FragmentManager manager = getSupportFragmentManager();
         fragment = manager.findFragmentById(R.id.fragment_container);
@@ -25,5 +26,13 @@ public abstract class SingleFragmentActivity extends AppCompatActivity {
                     .add(R.id.fragment_container, fragment)
                     .commit();
         }
+    }
+
+    protected void replaceFragment() {
+        FragmentManager manager = getSupportFragmentManager();
+        fragment = createFragment();
+        manager.beginTransaction()
+                .replace(R.id.fragment_container, fragment)
+                .commit();
     }
 }

@@ -13,19 +13,10 @@ import ru.nsu.bashev.R;
 public class ExampleFragment extends Fragment implements IExampleView {
 
     private IExamplePresenter presenter;
-    private Button pushButton;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_example, container, false);
-
-        pushButton = view.findViewById(R.id.pushButton);
-        pushButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                presenter.onButtonPush();
-            }
-        });
+        View view = inflater.inflate(R.layout.fragment_enter, container, false);
 
         return view;
     }
@@ -34,15 +25,6 @@ public class ExampleFragment extends Fragment implements IExampleView {
     public void onResume() {
         super.onResume();
         presenter.start();
-    }
-
-    @Override
-    public void showToast(boolean flag) {
-        if (flag) {
-            Toast.makeText(getContext(), "Орел", Toast.LENGTH_SHORT).show();
-        } else {
-            Toast.makeText(getContext(), "Решка", Toast.LENGTH_SHORT).show();
-        }
     }
 
     @Override
