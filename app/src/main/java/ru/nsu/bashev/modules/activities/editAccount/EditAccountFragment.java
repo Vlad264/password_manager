@@ -1,4 +1,4 @@
-package ru.nsu.bashev.modules.editAccount;
+package ru.nsu.bashev.modules.activities.editAccount;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
