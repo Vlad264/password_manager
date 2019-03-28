@@ -13,16 +13,18 @@ import ru.nsu.bashev.R;
 public class RegistrationFragment extends Fragment implements IRegistrationView {
 
     private IRegistrationPresenter presenter;
+    private EditText nameEditText;
     private EditText passwordEditText;
-    private Button enterButton;
+    private Button saveButton;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_registration, container, false);
 
-        passwordEditText = view.findViewById(R.id.enterPasswordEditText);
-        enterButton = view.findViewById(R.id.enterButton);
-        enterButton.setOnClickListener(new View.OnClickListener() {
+        nameEditText = view.findViewById(R.id.registerNameEditText);
+        passwordEditText = view.findViewById(R.id.registerPasswordEditText);
+        saveButton = view.findViewById(R.id.registerSaveButton);
+        saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //TODO add handler

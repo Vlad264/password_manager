@@ -85,8 +85,8 @@
                 app:layout_constraintTop_toBottomOf="@+id/emailTextView" />
 
             <TextView
-                android:id="@+id/descriptionTextView"
-                android:text="@string/description"
+                android:id="@+id/passwordTextView"
+                android:text="@string/password"
                 android:textSize="@dimen/default_text_size"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -96,7 +96,30 @@
                 app:layout_constraintTop_toBottomOf="@+id/emailValueEditText" />
 
             <EditText
-                android:id="@+id/descriptionEditText"
+                android:id="@+id/passwordValueEditText"
+                android:hint="@string/enter_password"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:ems="10"
+                android:inputType="textPassword"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/passwordTextView" />
+
+            <TextView
+                android:id="@+id/descriptionTextView"
+                android:text="@string/description"
+                android:textSize="@dimen/default_text_size"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/passwordValueEditText" />
+
+            <EditText
+                android:id="@+id/descriptionValueEditText"
                 android:hint="@string/enter_description"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
