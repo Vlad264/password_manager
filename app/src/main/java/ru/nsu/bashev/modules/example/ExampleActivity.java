@@ -10,14 +10,9 @@ import ru.nsu.bashev.modules.base.SingleFragmentActivity;
 import ru.nsu.bashev.modules.base.SwapFragmentActivity;
 import ru.nsu.bashev.modules.useCases.HandlePush;
 
-public class ExampleActivity extends SwapFragmentActivity {
+public class ExampleActivity extends SingleFragmentActivity {
 
     private IExamplePresenter presenter;
-
-    @Override
-    protected FragmentPagerAdapter createFragmentPagerAdapter() {
-        return new ExampleFragmentAdapter(getSupportFragmentManager());
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,16 +22,21 @@ public class ExampleActivity extends SwapFragmentActivity {
         UseCaseHandler handler = UseCaseHandler.getInstance();
         HandlePush handlePush = new HandlePush();
 
-        /*
         IExampleView view = (IExampleView) fragment;
         presenter = new ExamplePresenter(view, handler, handlePush);
         view.setPresenter(presenter);
-        */
 
     }
 
-    /*@Override
+    /*
+    @Override
+    protected FragmentPagerAdapter createFragmentPagerAdapter() {
+        return new ExampleFragmentAdapter(getSupportFragmentManager());
+    }
+    */
+
+    @Override
     protected Fragment createFragment() {
         return new ExampleFragment();
-    }*/
+    }
 }
