@@ -11,8 +11,6 @@ import android.widget.EditText;
 
 import ru.nsu.bashev.R;
 import ru.nsu.bashev.modules.activities.adapters.SelectCategoriesAdapter;
-import ru.nsu.bashev.modules.activities.enter.IEnterPresenter;
-import ru.nsu.bashev.modules.activities.enter.IEnterView;
 
 public class CreateAccountFragment extends Fragment implements ICreateAccountView {
 

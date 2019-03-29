@@ -4,6 +4,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.RadioButton;
 import android.widget.TextView;
 
@@ -12,12 +13,12 @@ import java.util.List;
 import ru.nsu.bashev.R;
 import ru.nsu.bashev.model.Category;
 
-public class SelectCategoriesAdapter extends RecyclerView.Adapter<SelectCategoriesAdapter.CategoryHolder> {
+public class CategoryViewAdapter extends RecyclerView.Adapter<CategoryViewAdapter.CategoryHolder> {
 
     private List<Category> categories;
     private List<Category> selectedCategories;
 
-    public SelectCategoriesAdapter(List<Category> categories, List<Category> selectedCategories) {
+    public CategoryViewAdapter(List<Category> categories, List<Category> selectedCategories) {
         this.categories = categories;
         this.selectedCategories = selectedCategories;
     }
@@ -40,6 +41,12 @@ public class SelectCategoriesAdapter extends RecyclerView.Adapter<SelectCategori
                 //TODO add handle
             }
         });
+        categoryHolder.removeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //TODO add handler
+            }
+        });
     }
 
     @Override
@@ -51,12 +58,13 @@ public class SelectCategoriesAdapter extends RecyclerView.Adapter<SelectCategori
 
         public RadioButton selectButton;
         public TextView nameTextView;
+        public ImageButton removeButton;
 
         public CategoryHolder(View itemView) {
             super(itemView);
             selectButton = itemView.findViewById(R.id.categorySelectRadioButton);
             nameTextView = itemView.findViewById(R.id.categoryNameTextView);
-            itemView.findViewById(R.id.categoryRemoveImageButton).setVisibility(View.GONE);
+            removeButton = itemView.findViewById(R.id.categoryRemoveImageButton);
         }
     }
 }

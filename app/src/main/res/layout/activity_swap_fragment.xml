@@ -11,8 +11,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:layout_marginBottom="8dp"
-        app:ipi_dotDiameter="8dp"
-        app:ipi_dotGap="8dp"
+        app:ipi_dotDiameter="12dp"
+        app:ipi_dotGap="12dp"
         app:ipi_animationDuration="320"
         app:ipi_pageIndicatorColor="@color/colorPrimary"
         app:ipi_currentPageIndicatorColor="@color/colorPrimaryDark"/>
