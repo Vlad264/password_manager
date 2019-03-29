@@ -28,7 +28,7 @@ public class EditAccountFragment extends Fragment implements IEditAccountView {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_enter, container, false);
+        View view = inflater.inflate(R.layout.fragment_account_edit, container, false);
 
         nameEditText = view.findViewById(R.id.nameValueEditText);
         loginEditText = view.findViewById(R.id.loginValueEditText);

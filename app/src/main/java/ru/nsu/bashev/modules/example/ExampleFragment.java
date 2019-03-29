@@ -5,8 +5,6 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.Toast;
 
 import ru.nsu.bashev.R;
 
@@ -16,7 +14,7 @@ public class ExampleFragment extends Fragment implements IExampleView {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_category_info, container, false);
+        View view = inflater.inflate(R.layout.fragment_category_edit, container, false);
 
         return view;
     }
