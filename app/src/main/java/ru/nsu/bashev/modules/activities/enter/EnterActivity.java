@@ -5,7 +5,6 @@ import android.support.v4.app.Fragment;
 
 import ru.nsu.bashev.common.useCaseEngine.UseCaseHandler;
 import ru.nsu.bashev.modules.base.SingleFragmentActivity;
-import ru.nsu.bashev.modules.useCases.HandlePush;
 
 public class EnterActivity extends SingleFragmentActivity {
 
@@ -16,10 +15,9 @@ public class EnterActivity extends SingleFragmentActivity {
         super.onCreate(savedInstanceState);
 
         UseCaseHandler handler = UseCaseHandler.getInstance();
-        HandlePush handlePush = new HandlePush();
 
         IEnterView view = (IEnterView) fragment;
-        presenter = new EnterPresenter(view, handler, handlePush);
+        presenter = new EnterPresenter(view, handler);
         view.setPresenter(presenter);
     }
 

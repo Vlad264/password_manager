@@ -5,7 +5,6 @@ import android.support.v4.app.Fragment;
 
 import ru.nsu.bashev.common.useCaseEngine.UseCaseHandler;
 import ru.nsu.bashev.modules.base.SingleFragmentActivity;
-import ru.nsu.bashev.modules.useCases.HandlePush;
 
 public class RegistrationActivity extends SingleFragmentActivity {
 
@@ -16,10 +15,9 @@ public class RegistrationActivity extends SingleFragmentActivity {
         super.onCreate(savedInstanceState);
 
         UseCaseHandler handler = UseCaseHandler.getInstance();
-        HandlePush handlePush = new HandlePush();
 
         IRegistrationView view = (IRegistrationView) fragment;
-        presenter = new RegistrationPresenter(view, handler, handlePush);
+        presenter = new RegistrationPresenter(view, handler);
         view.setPresenter(presenter);
     }
 
