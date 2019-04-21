@@ -13,9 +13,10 @@ import ru.nsu.bashev.modules.base.ISimpleDBHandler;
 
 public class CategoriesDBHandler extends SQLiteOpenHelper implements ISimpleDBHandler<Category> {
     private static final int VERSION = 1;
-    private static final String TABLE_NAME = "categories";
-    private static final String KEY_ID = "id";
-    private static final String KEY_NAME = "name";
+
+    public static final String TABLE_NAME = "categories";
+    public static final String KEY_ID = "id";
+    public static final String KEY_NAME = "name";
 
     private static final String INSERT = "INSERT INTO " + TABLE_NAME + "(" + KEY_NAME + ") VALUES(?)";
     private static final String UPDATE = "UPDATE " + TABLE_NAME + " SET " + KEY_NAME + "=? WHERE " + KEY_ID + "=?";

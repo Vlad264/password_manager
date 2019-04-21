@@ -13,9 +13,10 @@ import ru.nsu.bashev.modules.base.ISimpleDBHandler;
 
 public class LoginDBHandler extends SQLiteOpenHelper implements ISimpleDBHandler<Login> {
     private static final int VERSION = 1;
-    private static final String TABLE_NAME = "login";
-    private static final String KEY_ID = "id";
-    private static final String KEY_LOGIN = "login";
+
+    public static final String TABLE_NAME = "logins";
+    public static final String KEY_ID = "id";
+    public static final String KEY_LOGIN = "login";
 
     private static final String INSERT = "INSERT INTO " + TABLE_NAME + "(" + KEY_LOGIN + ") VALUES(?)";
     private static final String UPDATE = "UPDATE " + TABLE_NAME + " SET " + KEY_LOGIN + "=? WHERE " + KEY_ID + "=?";

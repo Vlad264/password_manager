@@ -13,9 +13,10 @@ import ru.nsu.bashev.modules.base.ISimpleDBHandler;
 
 public class EmailDBHandler extends SQLiteOpenHelper implements ISimpleDBHandler<Email> {
     private static final int VERSION = 1;
-    private static final String TABLE_NAME = "email";
-    private static final String KEY_ID = "id";
-    private static final String KEY_EMAIL = "email";
+
+    public static final String TABLE_NAME = "emails";
+    public static final String KEY_ID = "id";
+    public static final String KEY_EMAIL = "email";
 
     private static final String INSERT = "INSERT INTO " + TABLE_NAME + "(" + KEY_EMAIL + ") VALUES(?)";
     private static final String UPDATE = "UPDATE " + TABLE_NAME + " SET " + KEY_EMAIL + "=? WHERE " + KEY_ID + "=?";
