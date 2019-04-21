@@ -16,7 +16,6 @@ public class UserDBHandler extends SQLiteOpenHelper implements IUserDBHandler {
 
     private static final String SELECT = "SELECT * FROM " + TABLE_NAME;
 
-
     public UserDBHandler(Context context) {
         super(context, TABLE_NAME, null, VERSION);
     }
