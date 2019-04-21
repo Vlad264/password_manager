@@ -1,4 +1,4 @@
-package ru.nsu.bashev.modules.database.categories;
+package ru.nsu.bashev.modules.database.password;
 
 import android.content.Context;
 import android.database.Cursor;
@@ -8,23 +8,23 @@ import android.database.sqlite.SQLiteOpenHelper;
 import java.util.LinkedList;
 import java.util.List;
 
-import ru.nsu.bashev.model.Category;
+import ru.nsu.bashev.model.Password;
 import ru.nsu.bashev.modules.base.ISimpleDBHandler;
 
-public class CategoriesDBHandler extends SQLiteOpenHelper implements ISimpleDBHandler<Category> {
+public class PasswordDBHandler extends SQLiteOpenHelper implements ISimpleDBHandler<Password> {
     private static final int VERSION = 1;
-    private static final String TABLE_NAME = "categories";
+    private static final String TABLE_NAME = "password";
     private static final String KEY_ID = "id";
-    private static final String KEY_NAME = "name";
+    private static final String KEY_PASSWORD = "password";
 
-    private static final String INSERT = "INSERT INTO " + TABLE_NAME + "(" + KEY_NAME + ") VALUES(?)";
-    private static final String UPDATE = "UPDATE " + TABLE_NAME + " SET " + KEY_NAME + "=? WHERE " + KEY_ID + "=?";
+    private static final String INSERT = "INSERT INTO " + TABLE_NAME + "(" + KEY_PASSWORD + ") VALUES(?)";
+    private static final String UPDATE = "UPDATE " + TABLE_NAME + " SET " + KEY_PASSWORD + "=? WHERE " + KEY_ID + "=?";
     private static final String DELETE = "DELETE FROM " + TABLE_NAME + " WHERE " + KEY_ID + "=?";
 
     private static final String SELECT_ALL = "SELECT * FROM " + TABLE_NAME;
     private static final String SELECT_ID = "SELECT * FROM " + TABLE_NAME + " WHERE " + KEY_ID + "=?";
 
-    public CategoriesDBHandler(Context context) {
+    public PasswordDBHandler(Context context) {
         super(context, TABLE_NAME, null, VERSION);
     }
 
@@ -32,7 +32,7 @@ public class CategoriesDBHandler extends SQLiteOpenHelper implements ISimpleDBHa
     public void onCreate(SQLiteDatabase db) {
         String CREATE_TABLE = "CREATE TABLE " + TABLE_NAME + "("
                 + KEY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,"
-                + KEY_NAME + " TEXT" + ")";
+                + KEY_PASSWORD + " TEXT" + ")";
         db.execSQL(CREATE_TABLE);
     }
 
@@ -43,25 +43,25 @@ public class CategoriesDBHandler extends SQLiteOpenHelper implements ISimpleDBHa
     }
 
     @Override
-    public void add(Category category) {
+    public void add(Password password) {
         SQLiteDatabase db = this.getWritableDatabase();
-        db.execSQL(INSERT, new String[] {category.getName()});
+        db.execSQL(INSERT, new String[] { password.getPassword() });
         db.close();
     }
 
     @Override
-    public void update(int id, Category category) {
+    public void update(int id, Password password) {
         SQLiteDatabase db = this.getWritableDatabase();
-        db.execSQL(UPDATE, new String[] { category.getName(), Long.toString(id) });
+        db.execSQL(UPDATE, new String[] { password.getPassword(), Long.toString(id) });
         db.close();
     }
 
     @Override
-    public Category get(int id) {
+    public Password get(int id) {
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery(SELECT_ID, new String[] { Long.toString(id) });
         if (cursor.moveToNext()) {
-            return new Category(Long.parseLong(cursor.getString(0)), cursor.getString(1));
+            return new Password(Long.parseLong(cursor.getString(0)), cursor.getString(1));
         }
         cursor.close();
         db.close();
@@ -69,13 +69,13 @@ public class CategoriesDBHandler extends SQLiteOpenHelper implements ISimpleDBHa
     }
 
     @Override
-    public List<Category> getAll() {
-        List<Category> result = new LinkedList<>();
+    public List<Password> getAll() {
+        List<Password> result = new LinkedList<>();
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery(SELECT_ALL, null);
         if (cursor.moveToFirst()) {
             do {
-                result.add(new Category(Long.parseLong(cursor.getString(0)), cursor.getString(1)));
+                result.add(new Password(Long.parseLong(cursor.getString(0)), cursor.getString(1)));
             } while (cursor.moveToNext());
         }
         cursor.close();
