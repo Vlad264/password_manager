@@ -2,7 +2,7 @@ package ru.nsu.bashev.model;
 
 public class Category {
 
-    private int id;
+    private long id;
     private String name;
 
     public Category(String name) {
@@ -14,11 +14,11 @@ public class Category {
         this.name = name;
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 

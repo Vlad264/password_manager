@@ -12,7 +12,7 @@ import ru.nsu.bashev.model.Category;
 
 public class CategoriesDBHandler extends SQLiteOpenHelper implements ICategoriesDBHandler {
     private static final int VERSION = 1;
-    private static final String TABLE_NAME = "Categories";
+    private static final String TABLE_NAME = "categories";
     private static final String KEY_ID = "id";
     private static final String KEY_NAME = "name";
 

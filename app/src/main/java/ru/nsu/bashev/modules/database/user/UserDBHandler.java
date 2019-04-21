@@ -11,7 +11,7 @@ import ru.nsu.bashev.model.User;
 public class UserDBHandler extends SQLiteOpenHelper implements IUserDBHandler {
 
     private static final int VERSION = 1;
-    private static final String TABLE_NAME = "User";
+    private static final String TABLE_NAME = "user";
     private static final String PASSWORD = "password";
 
     private static final String SELECT = "SELECT * FROM " + TABLE_NAME;
