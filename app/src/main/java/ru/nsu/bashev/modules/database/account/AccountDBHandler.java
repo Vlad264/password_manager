@@ -1,14 +1,20 @@
 package ru.nsu.bashev.modules.database.account;
 
 import android.content.Context;
+import android.database.DatabaseUtils;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 import java.util.List;
 
 import ru.nsu.bashev.model.Account;
+import ru.nsu.bashev.model.Category;
 import ru.nsu.bashev.model.Email;
 import ru.nsu.bashev.model.Login;
+import ru.nsu.bashev.modules.database.categories.CategoriesDBHandler;
+import ru.nsu.bashev.modules.database.email.EmailDBHandler;
+import ru.nsu.bashev.modules.database.login.LoginDBHandler;
+import ru.nsu.bashev.modules.database.password.PasswordDBHandler;
 
 public class AccountDBHandler extends SQLiteOpenHelper implements IAccountDBHandler {
     private static final int VERSION = 1;
@@ -23,8 +29,17 @@ public class AccountDBHandler extends SQLiteOpenHelper implements IAccountDBHand
     private static final String UPDATE = "UPDATE " + TABLE_NAME + " SET " + KEY_NAME + "=?," + KEY_DESC + "=?," + KEY_PASSWORD_ID + "=? WHERE " + KEY_ID + "=?";
     private static final String DELETE = "DELETE FROM " + TABLE_NAME + " WHERE " + KEY_ID + "=?";
 
+    private CategoriesDBHandler categoriesDBHandler;
+    private EmailDBHandler emailDBHandler;
+    private LoginDBHandler loginDBHandler;
+    private PasswordDBHandler passwordDBHandler;
+
     public AccountDBHandler(Context context) {
         super(context, TABLE_NAME, null, VERSION);
+        categoriesDBHandler = new CategoriesDBHandler(context);
+        emailDBHandler = new EmailDBHandler(context);
+        loginDBHandler = new LoginDBHandler(context);
+        passwordDBHandler = new PasswordDBHandler(context);
     }
 
     @Override
@@ -62,12 +77,41 @@ public class AccountDBHandler extends SQLiteOpenHelper implements IAccountDBHand
         db.execSQL("DROP TABLE IF EXISTS " + AccountCategory.TABLE_NAME);
         db.execSQL("DROP TABLE IF EXISTS " + AccountEmail.TABLE_NAME);
         db.execSQL("DROP TABLE IF EXISTS " + AccountLogin.TABLE_NAME);
+        categoriesDBHandler.onUpgrade(categoriesDBHandler.getWritableDatabase(), oldVersion, newVersion);
+        emailDBHandler.onUpgrade(emailDBHandler.getWritableDatabase(), oldVersion, newVersion);
+        loginDBHandler.onUpgrade(loginDBHandler.getWritableDatabase(), oldVersion, newVersion);
+        passwordDBHandler.onUpgrade(passwordDBHandler.getWritableDatabase(), oldVersion, newVersion);
         onCreate(db);
     }
 
     @Override
     public void addAccount(Account account) {
+        long password_id = passwordDBHandler.has(account.getPassword());
+        if (password_id == -1) {
+            passwordDBHandler.add(account.getPassword());
+            password_id = passwordDBHandler.has(account.getPassword());
+        }
+        SQLiteDatabase db = this.getWritableDatabase();
+        long id = DatabaseUtils.longForQuery(db, INSERT, new String[] { account.getName(), account.getDescription(), Long.toString(password_id) });
 
+        for (Category c : account.getCategories()) {
+            AccountCategory.addConnect(db, id, c.getId());
+        }
+        if (account.hasEmail()) {
+            long emailId = emailDBHandler.has(account.getEmail());
+            if (emailId == -1) {
+                emailDBHandler.add(account.getEmail());
+            }
+            AccountEmail.addConnect(db, id, emailId);
+        }
+        if (account.hasLogin()) {
+            long loginId = loginDBHandler.has(account.getLogin());
+            if (loginId == -1) {
+                loginDBHandler.add(account.getLogin());
+            }
+            AccountLogin.addConnect(db, id, loginId);
+        }
+        db.close();
     }
 
     @Override
@@ -76,7 +120,7 @@ public class AccountDBHandler extends SQLiteOpenHelper implements IAccountDBHand
     }
 
     @Override
-    public List<Account> getAccount(int id) {
+    public Account getAccount(int id) {
         return null;
     }
 
@@ -112,6 +156,10 @@ public class AccountDBHandler extends SQLiteOpenHelper implements IAccountDBHand
         db.delete(AccountCategory.TABLE_NAME, null, null);
         db.delete(AccountEmail.TABLE_NAME, null, null);
         db.delete(AccountLogin.TABLE_NAME, null, null);
+        categoriesDBHandler.deleteAll();
+        emailDBHandler.deleteAll();
+        loginDBHandler.deleteAll();
+        passwordDBHandler.deleteAll();
         db.close();
     }
 }

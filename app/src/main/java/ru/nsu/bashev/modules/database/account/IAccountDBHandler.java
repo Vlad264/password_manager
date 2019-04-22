@@ -7,7 +7,7 @@ import ru.nsu.bashev.model.*;
 public interface IAccountDBHandler {
     void addAccount(Account account);
     void updateAccount(int id, Account account);
-    List<Account> getAccount(int id);
+    Account getAccount(int id);
     List<Account> getAccountsByTitle(String titile);
     List<Account> getAccountsByEmail(Email email);
     List<Account> getAccountsByLogin(Login login);
