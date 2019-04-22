@@ -9,9 +9,6 @@
     <string name="cancel">Отмена</string>
 
     <string name="search">Найти</string>
-    <string name="search_title">Найти по названию</string>
-    <string name="search_login">Найти по логину</string>
-    <string name="search_email">Найти по email</string>
 
     <string name="name">Имя:</string>
     <string name="enter_name">Введите имя</string>
@@ -29,5 +26,11 @@
     <string name="enter_description">Введите описание</string>
 
     <string name="categories">Категории:</string>
+
+    <string-array name="search_type">
+        <item>Название</item>
+        <item>Логин</item>
+        <item>email</item>
+    </string-array>
 
 </resources>

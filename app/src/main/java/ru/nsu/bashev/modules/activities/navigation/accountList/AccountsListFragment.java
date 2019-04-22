@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -25,12 +26,9 @@ public class AccountsListFragment extends Fragment implements IAccountsListView 
     private IAccountsListPresenter presenter;
     private AccountViewAdapter adapter;
 
-    private EditText searchByTitleEditText;
-    private EditText searchByLoginEditText;
-    private EditText searchByEmailEditText;
-    private Button searchByTitleButton;
-    private Button searchByLoginButton;
-    private Button searchByEmailButton;
+    private Spinner searchType;
+    private EditText searchEditText;
+    private Button searchButton;
     private RecyclerView accountsRecyclerView;
     private FloatingActionButton accountAddFloatingActionButton;
 
@@ -43,34 +41,22 @@ public class AccountsListFragment extends Fragment implements IAccountsListView 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_accounts_list, container, false);
 
-        searchByTitleEditText = view.findViewById(R.id.searchByTitleEditText);
-        searchByLoginEditText = view.findViewById(R.id.searchByLoginEditText);
-        searchByEmailEditText = view.findViewById(R.id.searchByEmailTitleEditText);
+        searchType = view.findViewById(R.id.searchType);
+        searchEditText = view.findViewById(R.id.searchEditText);
         accountsRecyclerView = view.findViewById(R.id.accountsRecyclerView);
+        searchButton = view.findViewById(R.id.searchButton);
+        searchButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //TODO add handle
+            }
+        });
+
+
         LinearLayoutManager manager = new LinearLayoutManager(getActivity());
         accountsRecyclerView.setLayoutManager(manager);
         accountsRecyclerView.setAdapter(new AccountViewAdapter(new LinkedList<Account>()));
-        searchByTitleButton = view.findViewById(R.id.searchByTitleButton);
-        searchByTitleButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //TODO add handler
-            }
-        });
-        searchByLoginButton = view.findViewById(R.id.searchByLoginButton);
-        searchByLoginButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //TODO add handler
-            }
-        });
-        searchByEmailButton = view.findViewById(R.id.searchByEmailTitleButton);
-        searchByEmailButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //TODO add handler
-            }
-        });
+
         accountAddFloatingActionButton = view.findViewById(R.id.accountAddFloatingActionButton);
         accountAddFloatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
