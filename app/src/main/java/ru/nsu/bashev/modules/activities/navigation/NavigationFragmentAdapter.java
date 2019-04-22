@@ -11,14 +11,17 @@ import ru.nsu.bashev.modules.activities.navigation.accountList.IAccountsListPres
 import ru.nsu.bashev.modules.activities.navigation.categoriesList.CategoriesListFragment;
 import ru.nsu.bashev.modules.activities.navigation.categoriesList.CategoriesListPresenter;
 import ru.nsu.bashev.modules.activities.navigation.categoriesList.ICategoriesListPresenter;
+import ru.nsu.bashev.modules.database.account.IAccountDBHandler;
 
 public class NavigationFragmentAdapter extends FragmentPagerAdapter {
 
     private UseCaseHandler handler;
+    private IAccountDBHandler accountDBHandler;
 
-    public NavigationFragmentAdapter(FragmentManager fm, UseCaseHandler handler) {
+    public NavigationFragmentAdapter(FragmentManager fm, UseCaseHandler handler, IAccountDBHandler accountDBHandler) {
         super(fm);
         this.handler = handler;
+        this.accountDBHandler = accountDBHandler;
     }
 
     @Override
@@ -26,7 +29,7 @@ public class NavigationFragmentAdapter extends FragmentPagerAdapter {
         switch (i % 2) {
             case 0: {
                 AccountsListFragment fragment = new AccountsListFragment();
-                IAccountsListPresenter presenter = new AccountsListPresenter(fragment, handler);
+                IAccountsListPresenter presenter = new AccountsListPresenter(fragment, handler, accountDBHandler);
                 fragment.setPresenter(presenter);
                 return fragment;
             }

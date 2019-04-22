@@ -20,13 +20,24 @@ public class Account {
         this.password = password;
     }
 
+    public Account(String name, String description, Password password, Email email, Login login, List<Category> categories) {
+        this.name = name;
+        this.description = description;
+        this.password = password;
+        this.email = email;
+        hasEmail = email != null;
+        this.login = login;
+        hasLogin = login != null;
+        this.categories = categories;
+    }
+
     public Account(long id, String name, String description, Password password, Email email, List<Category> categories) {
         this.id = id;
         this.name = name;
         this.description = description;
         this.password = password;
         this.email = email;
-        hasEmail = true;
+        hasEmail = email != null;
         this.categories = categories;
     }
 
@@ -36,7 +47,7 @@ public class Account {
         this.description = description;
         this.password = password;
         this.login = login;
-        hasLogin = true;
+        hasLogin = login != null;
         this.categories = categories;
     }
 
@@ -46,9 +57,9 @@ public class Account {
         this.description = description;
         this.password = password;
         this.email = email;
-        hasEmail = true;
+        hasEmail = email != null;
         this.login = login;
-        hasLogin = true;
+        hasLogin = login != null;
         this.categories = categories;
     }
 

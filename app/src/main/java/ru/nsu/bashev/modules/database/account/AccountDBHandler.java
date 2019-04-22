@@ -1,16 +1,20 @@
 package ru.nsu.bashev.modules.database.account;
 
+import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.DatabaseUtils;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import java.util.LinkedList;
 import java.util.List;
 
 import ru.nsu.bashev.model.Account;
 import ru.nsu.bashev.model.Category;
 import ru.nsu.bashev.model.Email;
 import ru.nsu.bashev.model.Login;
+import ru.nsu.bashev.model.Password;
 import ru.nsu.bashev.modules.database.categories.CategoriesDBHandler;
 import ru.nsu.bashev.modules.database.email.EmailDBHandler;
 import ru.nsu.bashev.modules.database.login.LoginDBHandler;
@@ -29,6 +33,8 @@ public class AccountDBHandler extends SQLiteOpenHelper implements IAccountDBHand
     private static final String UPDATE = "UPDATE " + TABLE_NAME + " SET " + KEY_NAME + "=?," + KEY_DESC + "=?," + KEY_PASSWORD_ID + "=? WHERE " + KEY_ID + "=?";
     private static final String DELETE = "DELETE FROM " + TABLE_NAME + " WHERE " + KEY_ID + "=?";
 
+    private static final String SELECT_ALL = "SELECT * FROM " + TABLE_NAME;
+
     private CategoriesDBHandler categoriesDBHandler;
     private EmailDBHandler emailDBHandler;
     private LoginDBHandler loginDBHandler;
@@ -40,6 +46,11 @@ public class AccountDBHandler extends SQLiteOpenHelper implements IAccountDBHand
         emailDBHandler = new EmailDBHandler(context);
         loginDBHandler = new LoginDBHandler(context);
         passwordDBHandler = new PasswordDBHandler(context);
+    }
+
+    @Override
+    public CategoriesDBHandler getCategoriesDBHandler() {
+        return categoriesDBHandler;
     }
 
     @Override
@@ -92,7 +103,11 @@ public class AccountDBHandler extends SQLiteOpenHelper implements IAccountDBHand
             password_id = passwordDBHandler.has(account.getPassword());
         }
         SQLiteDatabase db = this.getWritableDatabase();
-        long id = DatabaseUtils.longForQuery(db, INSERT, new String[] { account.getName(), account.getDescription(), Long.toString(password_id) });
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(KEY_NAME, account.getName());
+        contentValues.put(KEY_DESC, account.getDescription());
+        contentValues.put(KEY_PASSWORD_ID, password_id);
+        long id = db.insert(TABLE_NAME, null, contentValues);
 
         for (Category c : account.getCategories()) {
             AccountCategory.addConnect(db, id, c.getId());
@@ -141,7 +156,25 @@ public class AccountDBHandler extends SQLiteOpenHelper implements IAccountDBHand
 
     @Override
     public List<Account> getAllAccounts() {
-        return null;
+        List<Account> result = new LinkedList<>();
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery(SELECT_ALL, null);
+        if (cursor.moveToFirst()) {
+            do {
+                Email email = null;
+                Login login = null;
+                result.add(new Account(Long.parseLong(cursor.getString(0)),
+                        cursor.getString(1),
+                        cursor.getString(2),
+                        new Password(cursor.getString(3)),
+                        email,
+                        login,
+                        null));
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        db.close();
+        return result;
     }
 
     @Override

@@ -1,5 +1,6 @@
 package ru.nsu.bashev.modules.activities.createAccount;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.RecyclerView;
@@ -9,8 +10,16 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 
+import java.util.LinkedList;
+
 import ru.nsu.bashev.R;
+import ru.nsu.bashev.model.Account;
+import ru.nsu.bashev.model.Category;
+import ru.nsu.bashev.model.Email;
+import ru.nsu.bashev.model.Login;
+import ru.nsu.bashev.model.Password;
 import ru.nsu.bashev.modules.activities.adapters.SelectCategoriesAdapter;
+import ru.nsu.bashev.modules.activities.navigation.NavigationActivity;
 
 public class CreateAccountFragment extends Fragment implements ICreateAccountView {
 
@@ -40,14 +49,14 @@ public class CreateAccountFragment extends Fragment implements ICreateAccountVie
         cancelButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //TODO add handler
+                close();
             }
         });
         saveButton = view.findViewById(R.id.accountSaveButton);
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //TODO add handler
+                save();
             }
         });
 
@@ -63,5 +72,20 @@ public class CreateAccountFragment extends Fragment implements ICreateAccountVie
     @Override
     public void setPresenter(ICreateAccountPresenter presenter) {
         this.presenter = presenter;
+    }
+
+    @Override
+    public void close() {
+        Intent intent = new Intent(getContext(), NavigationActivity.class);
+        startActivity(intent);
+    }
+
+    private void save() {
+        presenter.saveAccount(new Account(nameEditText.getText().toString(),
+                descriptionEditText.getText().toString(),
+                new Password(passwordEditText.getText().toString()),
+                emailEditText.getText().toString().isEmpty() ? null : new Email(emailEditText.getText().toString()),
+                loginEditText.getText().toString().isEmpty() ? null : new Login(loginEditText.getText().toString()),
+                new LinkedList<Category>()));
     }
 }

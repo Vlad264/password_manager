@@ -1,8 +1,10 @@
 package ru.nsu.bashev.modules.activities.navigation.accountList;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,8 +12,13 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 
+import java.util.LinkedList;
+import java.util.List;
+
 import ru.nsu.bashev.R;
+import ru.nsu.bashev.model.Account;
 import ru.nsu.bashev.modules.activities.adapters.AccountViewAdapter;
+import ru.nsu.bashev.modules.activities.createAccount.CreateAccountActivity;
 
 public class AccountsListFragment extends Fragment implements IAccountsListView {
 
@@ -40,6 +47,9 @@ public class AccountsListFragment extends Fragment implements IAccountsListView 
         searchByLoginEditText = view.findViewById(R.id.searchByLoginEditText);
         searchByEmailEditText = view.findViewById(R.id.searchByEmailTitleEditText);
         accountsRecyclerView = view.findViewById(R.id.accountsRecyclerView);
+        LinearLayoutManager manager = new LinearLayoutManager(getActivity());
+        accountsRecyclerView.setLayoutManager(manager);
+        accountsRecyclerView.setAdapter(new AccountViewAdapter(new LinkedList<Account>()));
         searchByTitleButton = view.findViewById(R.id.searchByTitleButton);
         searchByTitleButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -65,7 +75,8 @@ public class AccountsListFragment extends Fragment implements IAccountsListView 
         accountAddFloatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //TODO add handler
+                Intent intent = new Intent(getContext(), CreateAccountActivity.class);
+                startActivity(intent);
             }
         });
 
@@ -75,11 +86,16 @@ public class AccountsListFragment extends Fragment implements IAccountsListView 
     @Override
     public void onResume() {
         super.onResume();
-        //presenter.start();
+        presenter.start();
     }
 
     @Override
     public void setPresenter(IAccountsListPresenter presenter) {
         this.presenter = presenter;
+    }
+
+    @Override
+    public void showAccounts(List<Account> accounts) {
+        accountsRecyclerView.setAdapter(new AccountViewAdapter(accounts));
     }
 }
