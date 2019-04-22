@@ -24,6 +24,7 @@ public class LoginDBHandler extends SQLiteOpenHelper implements ISimpleDBHandler
 
     private static final String SELECT_ALL = "SELECT * FROM " + TABLE_NAME;
     private static final String SELECT_ID = "SELECT * FROM " + TABLE_NAME + " WHERE " + KEY_ID + "=?";
+    private static final String SELECT_LOGIN = "SELECT * FROM " + TABLE_NAME + " WHERE " + KEY_LOGIN + "=?";
 
     public LoginDBHandler(Context context) {
         super(context, TABLE_NAME, null, VERSION);
@@ -55,6 +56,21 @@ public class LoginDBHandler extends SQLiteOpenHelper implements ISimpleDBHandler
         SQLiteDatabase db = this.getWritableDatabase();
         db.execSQL(UPDATE, new String[] { category.getLogin(), Long.toString(id) });
         db.close();
+    }
+
+    @Override
+    public long has(Login login) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery(SELECT_LOGIN, new String[] { login.getLogin() });
+        if (cursor.moveToNext()) {
+            long id = Long.parseLong(cursor.getString(0));
+            cursor.close();
+            db.close();
+            return id;
+        }
+        cursor.close();
+        db.close();
+        return -1;
     }
 
     @Override

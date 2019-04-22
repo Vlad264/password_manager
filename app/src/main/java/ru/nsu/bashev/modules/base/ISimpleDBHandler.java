@@ -5,6 +5,7 @@ import java.util.List;
 public interface ISimpleDBHandler<T> {
     void add(T value);
     void update(int id, T value);
+    long has(T value);
     T get(int id);
     List<T> getAll();
     void delete(int id);

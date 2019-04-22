@@ -24,6 +24,7 @@ public class PasswordDBHandler extends SQLiteOpenHelper implements ISimpleDBHand
 
     private static final String SELECT_ALL = "SELECT * FROM " + TABLE_NAME;
     private static final String SELECT_ID = "SELECT * FROM " + TABLE_NAME + " WHERE " + KEY_ID + "=?";
+    private static final String SELECT_PASSWORD = "SELECT * FROM " + TABLE_NAME + " WHERE " + KEY_PASSWORD + "=?";
 
     public PasswordDBHandler(Context context) {
         super(context, TABLE_NAME, null, VERSION);
@@ -55,6 +56,21 @@ public class PasswordDBHandler extends SQLiteOpenHelper implements ISimpleDBHand
         SQLiteDatabase db = this.getWritableDatabase();
         db.execSQL(UPDATE, new String[] { password.getPassword(), Long.toString(id) });
         db.close();
+    }
+
+    @Override
+    public long has(Password password) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery(SELECT_PASSWORD, new String[] { password.getPassword() });
+        if (cursor.moveToNext()) {
+            long id = Long.parseLong(cursor.getString(0));
+            cursor.close();
+            db.close();
+            return id;
+        }
+        cursor.close();
+        db.close();
+        return -1;
     }
 
     @Override

@@ -24,6 +24,7 @@ public class CategoriesDBHandler extends SQLiteOpenHelper implements ISimpleDBHa
 
     private static final String SELECT_ALL = "SELECT * FROM " + TABLE_NAME;
     private static final String SELECT_ID = "SELECT * FROM " + TABLE_NAME + " WHERE " + KEY_ID + "=?";
+    private static final String SELECT_NAME = "SELECT * FROM " + TABLE_NAME + " WHERE " + KEY_NAME + "=?";
 
     public CategoriesDBHandler(Context context) {
         super(context, TABLE_NAME, null, VERSION);
@@ -55,6 +56,21 @@ public class CategoriesDBHandler extends SQLiteOpenHelper implements ISimpleDBHa
         SQLiteDatabase db = this.getWritableDatabase();
         db.execSQL(UPDATE, new String[] { category.getName(), Long.toString(id) });
         db.close();
+    }
+
+    @Override
+    public long has(Category category) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery(SELECT_NAME, new String[] { category.getName() });
+        if (cursor.moveToNext()) {
+            long id = Long.parseLong(cursor.getString(0));
+            cursor.close();
+            db.close();
+            return id;
+        }
+        cursor.close();
+        db.close();
+        return -1;
     }
 
     @Override
