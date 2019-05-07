@@ -1,5 +1,6 @@
 package ru.nsu.bashev.modules.activities.registration;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -7,8 +8,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import ru.nsu.bashev.R;
+import ru.nsu.bashev.modules.activities.navigation.NavigationActivity;
 
 public class RegistrationFragment extends Fragment implements IRegistrationView {
 
@@ -27,7 +30,7 @@ public class RegistrationFragment extends Fragment implements IRegistrationView 
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //TODO add handler
+                presenter.saveUser(nameEditText.getText().toString(), passwordEditText.getText().toString());
             }
         });
 
@@ -47,11 +50,12 @@ public class RegistrationFragment extends Fragment implements IRegistrationView 
 
     @Override
     public void success() {
-
+        Intent intent = new Intent(getContext(), NavigationActivity.class);
+        startActivity(intent);
     }
 
     @Override
     public void error() {
-
+        Toast.makeText(getContext(), "Name and password must be fill", Toast.LENGTH_SHORT).show();
     }
 }

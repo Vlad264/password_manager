@@ -25,7 +25,7 @@ public class EnterPresenter implements IEnterPresenter {
         handler.execute(checkUser, request, new IUseCaseCallback<CheckUser.ResponseValues>() {
             @Override
             public void onSuccess(CheckUser.ResponseValues response) {
-
+                view.showName(response.getName());
             }
 
             @Override

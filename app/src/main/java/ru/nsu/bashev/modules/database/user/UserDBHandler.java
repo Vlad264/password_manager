@@ -39,7 +39,9 @@ public class UserDBHandler extends SQLiteOpenHelper implements IUserDBHandler {
     public boolean hasUser() {
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery(SELECT, null);
-        return cursor.moveToFirst();
+        boolean result = cursor.moveToFirst();
+        cursor.close();
+        return result;
     }
 
     @Override
@@ -47,8 +49,11 @@ public class UserDBHandler extends SQLiteOpenHelper implements IUserDBHandler {
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery(SELECT, null);
         if (cursor.moveToFirst()) {
-            return new User(cursor.getString(0), cursor.getString(1));
+            User result = new User(cursor.getString(0), cursor.getString(1));
+            cursor.close();
+            return result;
         }
+        cursor.close();
         return null;
     }
 
