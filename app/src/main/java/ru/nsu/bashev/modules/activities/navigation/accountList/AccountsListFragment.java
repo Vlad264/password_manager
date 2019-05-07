@@ -55,7 +55,7 @@ public class AccountsListFragment extends Fragment implements IAccountsListView 
 
         LinearLayoutManager manager = new LinearLayoutManager(getActivity());
         accountsRecyclerView.setLayoutManager(manager);
-        accountsRecyclerView.setAdapter(new AccountViewAdapter(presenter, new LinkedList<Account>()));
+        accountsRecyclerView.setAdapter(new AccountViewAdapter(getContext(), presenter, new LinkedList<Account>()));
 
         accountAddFloatingActionButton = view.findViewById(R.id.accountAddFloatingActionButton);
         accountAddFloatingActionButton.setOnClickListener(new View.OnClickListener() {
@@ -82,6 +82,6 @@ public class AccountsListFragment extends Fragment implements IAccountsListView 
 
     @Override
     public void showAccounts(List<Account> accounts) {
-        accountsRecyclerView.setAdapter(new AccountViewAdapter(presenter, accounts));
+        accountsRecyclerView.setAdapter(new AccountViewAdapter(getContext(), presenter, accounts));
     }
 }

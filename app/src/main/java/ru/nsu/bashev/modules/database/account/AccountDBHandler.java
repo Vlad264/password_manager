@@ -34,6 +34,7 @@ public class AccountDBHandler extends SQLiteOpenHelper implements IAccountDBHand
     private static final String DELETE = "DELETE FROM " + TABLE_NAME + " WHERE " + KEY_ID + "=?";
 
     private static final String SELECT_ALL = "SELECT * FROM " + TABLE_NAME;
+    private static final String SELECT_ID = "SELECT * FROM " + TABLE_NAME + " WHERE " + KEY_ID + "=?";
 
     private CategoriesDBHandler categoriesDBHandler;
     private EmailDBHandler emailDBHandler;
@@ -131,11 +132,28 @@ public class AccountDBHandler extends SQLiteOpenHelper implements IAccountDBHand
 
     @Override
     public void updateAccount(long id, Account account) {
-
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.execSQL(UPDATE, new String[] {});
     }
 
     @Override
     public Account getAccount(long id) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery(SELECT_ID, new String[] { Long.toString(id)});
+        if (cursor.moveToFirst()) {
+            Account result = new Account(Long.parseLong(cursor.getString(0)),
+                    cursor.getString(1),
+                    cursor.getString(2),
+                    new Password(cursor.getString(3)),
+                    null,
+                    null,
+                    null);
+            cursor.close();
+            db.close();
+            return result;
+        }
+        cursor.close();
+        db.close();
         return null;
     }
 

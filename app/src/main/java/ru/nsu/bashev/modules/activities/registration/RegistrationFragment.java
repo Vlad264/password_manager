@@ -52,6 +52,7 @@ public class RegistrationFragment extends Fragment implements IRegistrationView 
     public void success() {
         Intent intent = new Intent(getContext(), NavigationActivity.class);
         startActivity(intent);
+        getActivity().finish();
     }
 
     @Override

@@ -19,5 +19,6 @@
         <activity android:name=".modules.activities.registration.RegistrationActivity"/>
         <activity android:name=".modules.activities.navigation.NavigationActivity"/>
         <activity android:name=".modules.activities.createAccount.CreateAccountActivity"/>
+        <activity android:name=".modules.activities.viewAccount.ViewAccountActivity"/>
     </application>
 </manifest>
