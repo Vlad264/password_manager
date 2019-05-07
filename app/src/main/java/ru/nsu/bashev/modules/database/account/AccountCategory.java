@@ -29,4 +29,8 @@ class AccountCategory {
     static void addConnect(SQLiteDatabase db, long accountId, long categoryId) {
         db.execSQL(INSERT, new String[] { Long.toString(accountId), Long.toString(categoryId) });
     }
+
+    static void deleteConnect(SQLiteDatabase db, long accountId) {
+        db.execSQL(DELETE_ACCOUNT, new String[] { Long.toString(accountId) });
+    }
 }

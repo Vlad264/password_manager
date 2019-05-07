@@ -4,5 +4,7 @@ import ru.nsu.bashev.modules.base.IBaseView;
 import ru.nsu.bashev.modules.example.IExamplePresenter;
 
 public interface IEnterView extends IBaseView<IEnterPresenter> {
-
+    void success();
+    void incorrectPassword();
+    void noRegistration();
 }

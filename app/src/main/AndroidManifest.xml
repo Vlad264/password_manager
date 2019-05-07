@@ -10,13 +10,14 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".modules.activities.navigation.NavigationActivity">
+        <activity android:name=".modules.activities.enter.EnterActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".modules.activities.registration.RegistrationActivity"/>
+        <activity android:name=".modules.activities.navigation.NavigationActivity"/>
         <activity android:name=".modules.activities.createAccount.CreateAccountActivity"/>
     </application>
 </manifest>

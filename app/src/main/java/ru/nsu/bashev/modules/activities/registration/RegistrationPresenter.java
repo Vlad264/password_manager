@@ -16,4 +16,9 @@ public class RegistrationPresenter implements IRegistrationPresenter {
     public void start() {
         //Nothing on start
     }
+
+    @Override
+    public void saveUser(String name, String password) {
+
+    }
 }

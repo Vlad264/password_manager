@@ -29,4 +29,8 @@ class AccountLogin {
     static void addConnect(SQLiteDatabase db, long accountId, long loginId) {
         db.execSQL(INSERT, new String[] { Long.toString(accountId), Long.toString(loginId) });
     }
+
+    static void deleteConnect(SQLiteDatabase db, long accountId) {
+        db.execSQL(DELETE_ACCOUNT, new String[] { Long.toString(accountId) });
+    }
 }

@@ -3,6 +3,7 @@ package ru.nsu.bashev.modules.activities.navigation.accountList;
 import ru.nsu.bashev.common.useCaseEngine.IUseCaseCallback;
 import ru.nsu.bashev.common.useCaseEngine.UseCaseHandler;
 import ru.nsu.bashev.modules.database.account.IAccountDBHandler;
+import ru.nsu.bashev.modules.useCases.DeleteAccount;
 import ru.nsu.bashev.modules.useCases.LoadAccounts;
 
 public class AccountsListPresenter implements IAccountsListPresenter {
@@ -25,6 +26,23 @@ public class AccountsListPresenter implements IAccountsListPresenter {
             @Override
             public void onSuccess(LoadAccounts.ResponseValues response) {
                 view.showAccounts(response.getAccounts());
+            }
+
+            @Override
+            public void onError() {
+
+            }
+        });
+    }
+
+    @Override
+    public void removeAccount(long id) {
+        DeleteAccount deleteAccount = new DeleteAccount(accountDBHandler);
+        DeleteAccount.RequestValues request = new DeleteAccount.RequestValues(id);
+        handler.execute(deleteAccount, request, new IUseCaseCallback<DeleteAccount.ResponseValues>() {
+            @Override
+            public void onSuccess(DeleteAccount.ResponseValues response) {
+                start();
             }
 
             @Override

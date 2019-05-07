@@ -12,7 +12,8 @@ public class UserDBHandler extends SQLiteOpenHelper implements IUserDBHandler {
 
     private static final int VERSION = 1;
     private static final String TABLE_NAME = "user";
-    private static final String PASSWORD = "password";
+    private static final String KEY_NAME = "name";
+    private static final String KEY_PASSWORD = "password";
 
     private static final String SELECT = "SELECT * FROM " + TABLE_NAME;
 
@@ -23,7 +24,8 @@ public class UserDBHandler extends SQLiteOpenHelper implements IUserDBHandler {
     @Override
     public void onCreate(SQLiteDatabase db) {
         String CREATE_TABLE = "CREATE TABLE " + TABLE_NAME + "("
-                + PASSWORD + " TEXT" + ")";
+                + KEY_NAME + " TEXT,"
+                + KEY_PASSWORD + " TEXT" + ")";
         db.execSQL(CREATE_TABLE);
     }
 
@@ -45,7 +47,7 @@ public class UserDBHandler extends SQLiteOpenHelper implements IUserDBHandler {
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery(SELECT, null);
         if (cursor.moveToFirst()) {
-            return new User(cursor.getString(0));
+            return new User(cursor.getString(0), cursor.getString(1));
         }
         return null;
     }
@@ -54,7 +56,8 @@ public class UserDBHandler extends SQLiteOpenHelper implements IUserDBHandler {
     public void addUser(User user) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
-        contentValues.put(PASSWORD, user.getPassword());
+        contentValues.put(KEY_NAME, user.getName());
+        contentValues.put(KEY_PASSWORD, user.getPassword());
         db.insert(TABLE_NAME, null, contentValues);
         db.close();
     }
@@ -64,7 +67,8 @@ public class UserDBHandler extends SQLiteOpenHelper implements IUserDBHandler {
         SQLiteDatabase db = this.getWritableDatabase();
         db.delete(TABLE_NAME, null, null);
         ContentValues contentValues = new ContentValues();
-        contentValues.put(PASSWORD, user.getPassword());
+        contentValues.put(KEY_NAME, user.getName());
+        contentValues.put(KEY_PASSWORD, user.getPassword());
         db.insert(TABLE_NAME, null, contentValues);
         db.close();
     }

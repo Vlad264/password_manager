@@ -130,12 +130,12 @@ public class AccountDBHandler extends SQLiteOpenHelper implements IAccountDBHand
     }
 
     @Override
-    public void updateAccount(int id, Account account) {
+    public void updateAccount(long id, Account account) {
 
     }
 
     @Override
-    public Account getAccount(int id) {
+    public Account getAccount(long id) {
         return null;
     }
 
@@ -178,8 +178,12 @@ public class AccountDBHandler extends SQLiteOpenHelper implements IAccountDBHand
     }
 
     @Override
-    public void deleteAccount(int id) {
-
+    public void deleteAccount(long id) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.execSQL(DELETE, new String[] { Long.toString(id) });
+        AccountCategory.deleteConnect(db, id);
+        AccountEmail.deleteConnect(db, id);
+        AccountLogin.deleteConnect(db, id);
     }
 
     @Override

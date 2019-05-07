@@ -29,4 +29,8 @@ class AccountEmail {
     static void addConnect(SQLiteDatabase db, long accountId, long emailId) {
         db.execSQL(INSERT, new String[] { Long.toString(accountId), Long.toString(emailId) });
     }
+
+    static void deleteConnect(SQLiteDatabase db, long accountId) {
+        db.execSQL(DELETE_ACCOUNT, new String[] { Long.toString(accountId) });
+    }
 }

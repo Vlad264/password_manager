@@ -4,18 +4,22 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import java.util.List;
 
 import ru.nsu.bashev.R;
 import ru.nsu.bashev.model.Account;
+import ru.nsu.bashev.modules.activities.navigation.accountList.IAccountsListPresenter;
 
 public class AccountViewAdapter extends RecyclerView.Adapter<AccountViewAdapter.AccountHolder> {
 
+    private IAccountsListPresenter presenter;
     private List<Account> accounts;
 
-    public AccountViewAdapter(List<Account> accounts) {
+    public AccountViewAdapter(IAccountsListPresenter presenter, List<Account> accounts) {
+        this.presenter = presenter;
         this.accounts = accounts;
     }
 
@@ -27,9 +31,16 @@ public class AccountViewAdapter extends RecyclerView.Adapter<AccountViewAdapter.
     }
 
     @Override
-    public void onBindViewHolder(AccountHolder accountHolder, int i) {
+    public void onBindViewHolder(final AccountHolder accountHolder, int i) {
+        accountHolder.id = accounts.get(i).getId();
         accountHolder.title.setText(accounts.get(i).getName());
         accountHolder.password.setText(accounts.get(i).getPassword().getPassword());
+        accountHolder.removeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                presenter.removeAccount(accountHolder.id);
+            }
+        });
     }
 
     @Override
@@ -39,13 +50,16 @@ public class AccountViewAdapter extends RecyclerView.Adapter<AccountViewAdapter.
 
     public static final class AccountHolder extends RecyclerView.ViewHolder {
 
+        public long id;
         public TextView title;
         public TextView password;
+        public ImageButton removeButton;
 
         public AccountHolder(View itemView) {
             super(itemView);
             title = itemView.findViewById(R.id.accountTitleTextView);
             password = itemView.findViewById(R.id.accountPasswordValueTextView);
+            removeButton = itemView.findViewById(R.id.accountRemoveImageButton);
         }
     }
 }

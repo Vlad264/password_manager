@@ -44,4 +44,14 @@ public class RegistrationFragment extends Fragment implements IRegistrationView 
     public void setPresenter(IRegistrationPresenter presenter) {
         this.presenter = presenter;
     }
+
+    @Override
+    public void success() {
+
+    }
+
+    @Override
+    public void error() {
+
+    }
 }

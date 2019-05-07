@@ -1,5 +1,6 @@
 package ru.nsu.bashev.modules.activities.enter;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -7,8 +8,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import ru.nsu.bashev.R;
+import ru.nsu.bashev.modules.activities.navigation.NavigationActivity;
+import ru.nsu.bashev.modules.activities.registration.RegistrationActivity;
 import ru.nsu.bashev.modules.example.IExamplePresenter;
 import ru.nsu.bashev.modules.example.IExampleView;
 
@@ -43,5 +47,22 @@ public class EnterFragment extends Fragment implements IEnterView {
     @Override
     public void setPresenter(IEnterPresenter presenter) {
         this.presenter = presenter;
+    }
+
+    @Override
+    public void success() {
+        Intent intent = new Intent(getContext(), NavigationActivity.class);
+        startActivity(intent);
+    }
+
+    @Override
+    public void incorrectPassword() {
+        Toast.makeText(getContext(), "Incorrect password", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void noRegistration() {
+        Intent intent = new Intent(getContext(), RegistrationActivity.class);
+        startActivity(intent);
     }
 }
