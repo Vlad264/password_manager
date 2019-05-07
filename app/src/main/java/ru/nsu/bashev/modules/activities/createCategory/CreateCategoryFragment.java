@@ -9,6 +9,7 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import ru.nsu.bashev.R;
+import ru.nsu.bashev.model.Category;
 
 public class CreateCategoryFragment extends Fragment implements ICreateCategoryView {
 
@@ -27,14 +28,14 @@ public class CreateCategoryFragment extends Fragment implements ICreateCategoryV
         cancelButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //TODO add handler
+                close();
             }
         });
         saveButton = view.findViewById(R.id.categorySaveButton);
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //TODO add handler
+                save();
             }
         });
 
@@ -50,5 +51,14 @@ public class CreateCategoryFragment extends Fragment implements ICreateCategoryV
     @Override
     public void setPresenter(ICreateCategoryPresenter presenter) {
         this.presenter = presenter;
+    }
+
+    @Override
+    public void close() {
+        getActivity().finish();
+    }
+
+    private void save() {
+        presenter.saveCategory(new Category(nameEditText.getText().toString()));
     }
 }

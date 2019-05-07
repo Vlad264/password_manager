@@ -12,16 +12,19 @@ import ru.nsu.bashev.modules.activities.navigation.categoriesList.CategoriesList
 import ru.nsu.bashev.modules.activities.navigation.categoriesList.CategoriesListPresenter;
 import ru.nsu.bashev.modules.activities.navigation.categoriesList.ICategoriesListPresenter;
 import ru.nsu.bashev.modules.database.account.IAccountDBHandler;
+import ru.nsu.bashev.modules.database.categories.ICategoriesDBHandler;
 
 public class NavigationFragmentAdapter extends FragmentPagerAdapter {
 
     private UseCaseHandler handler;
     private IAccountDBHandler accountDBHandler;
+    private ICategoriesDBHandler categoriesDBHandler;
 
-    public NavigationFragmentAdapter(FragmentManager fm, UseCaseHandler handler, IAccountDBHandler accountDBHandler) {
+    public NavigationFragmentAdapter(FragmentManager fm, UseCaseHandler handler, IAccountDBHandler accountDBHandler, ICategoriesDBHandler categoriesDBHandler) {
         super(fm);
         this.handler = handler;
         this.accountDBHandler = accountDBHandler;
+        this.categoriesDBHandler = categoriesDBHandler;
     }
 
     @Override
@@ -35,7 +38,7 @@ public class NavigationFragmentAdapter extends FragmentPagerAdapter {
             }
             case 1: {
                 CategoriesListFragment fragment = new CategoriesListFragment();
-                ICategoriesListPresenter presenter = new CategoriesListPresenter(fragment, handler);
+                ICategoriesListPresenter presenter = new CategoriesListPresenter(fragment, handler, categoriesDBHandler);
                 fragment.setPresenter(presenter);
                 return fragment;
             }

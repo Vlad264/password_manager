@@ -76,8 +76,7 @@ public class CreateAccountFragment extends Fragment implements ICreateAccountVie
 
     @Override
     public void close() {
-        Intent intent = new Intent(getContext(), NavigationActivity.class);
-        startActivity(intent);
+        getActivity().finish();
     }
 
     private void save() {

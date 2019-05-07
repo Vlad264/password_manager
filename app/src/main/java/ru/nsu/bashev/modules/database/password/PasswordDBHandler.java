@@ -52,7 +52,7 @@ public class PasswordDBHandler extends SQLiteOpenHelper implements ISimpleDBHand
     }
 
     @Override
-    public void update(int id, Password password) {
+    public void update(long id, Password password) {
         SQLiteDatabase db = this.getWritableDatabase();
         db.execSQL(UPDATE, new String[] { password.getPassword(), Long.toString(id) });
         db.close();
@@ -74,7 +74,7 @@ public class PasswordDBHandler extends SQLiteOpenHelper implements ISimpleDBHand
     }
 
     @Override
-    public Password get(int id) {
+    public Password get(long id) {
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery(SELECT_ID, new String[] { Long.toString(id) });
         if (cursor.moveToNext()) {
@@ -101,7 +101,7 @@ public class PasswordDBHandler extends SQLiteOpenHelper implements ISimpleDBHand
     }
 
     @Override
-    public void delete(int id) {
+    public void delete(long id) {
         SQLiteDatabase db = this.getWritableDatabase();
         db.execSQL(DELETE, new String[] { Long.toString(id) });
         db.close();

@@ -52,7 +52,7 @@ public class LoginDBHandler extends SQLiteOpenHelper implements ISimpleDBHandler
     }
 
     @Override
-    public void update(int id, Login category) {
+    public void update(long id, Login category) {
         SQLiteDatabase db = this.getWritableDatabase();
         db.execSQL(UPDATE, new String[] { category.getLogin(), Long.toString(id) });
         db.close();
@@ -74,7 +74,7 @@ public class LoginDBHandler extends SQLiteOpenHelper implements ISimpleDBHandler
     }
 
     @Override
-    public Login get(int id) {
+    public Login get(long id) {
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery(SELECT_ID, new String[] { Long.toString(id) });
         if (cursor.moveToNext()) {
@@ -101,7 +101,7 @@ public class LoginDBHandler extends SQLiteOpenHelper implements ISimpleDBHandler
     }
 
     @Override
-    public void delete(int id) {
+    public void delete(long id) {
         SQLiteDatabase db = this.getWritableDatabase();
         db.execSQL(DELETE, new String[] { Long.toString(id) });
         db.close();

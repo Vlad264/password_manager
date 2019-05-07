@@ -1,5 +1,6 @@
 package ru.nsu.bashev.modules.activities.adapters;
 
+import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,15 +13,18 @@ import java.util.List;
 
 import ru.nsu.bashev.R;
 import ru.nsu.bashev.model.Category;
+import ru.nsu.bashev.modules.activities.navigation.categoriesList.ICategoriesListPresenter;
 
 public class CategoryViewAdapter extends RecyclerView.Adapter<CategoryViewAdapter.CategoryHolder> {
 
+    private Context context;
     private List<Category> categories;
-    private List<Category> selectedCategories;
+    private ICategoriesListPresenter presenter;
 
-    public CategoryViewAdapter(List<Category> categories, List<Category> selectedCategories) {
+    public CategoryViewAdapter(Context context, List<Category> categories, ICategoriesListPresenter presenter) {
+        this.context = context;
         this.categories = categories;
-        this.selectedCategories = selectedCategories;
+        this.presenter = presenter;
     }
 
     @Override
@@ -32,19 +36,19 @@ public class CategoryViewAdapter extends RecyclerView.Adapter<CategoryViewAdapte
     }
 
     @Override
-    public void onBindViewHolder(CategoryHolder categoryHolder, int i) {
+    public void onBindViewHolder(final CategoryHolder categoryHolder, int i) {
+        categoryHolder.id = categories.get(i).getId();
         categoryHolder.nameTextView.setText(categories.get(i).getName());
-        categoryHolder.selectButton.setChecked(selectedCategories.contains(categories.get(i)));
         categoryHolder.selectButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //TODO add handle
+
             }
         });
         categoryHolder.removeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //TODO add handler
+                presenter.removeCategory(categoryHolder.id);
             }
         });
     }
@@ -56,6 +60,7 @@ public class CategoryViewAdapter extends RecyclerView.Adapter<CategoryViewAdapte
 
     public static final class CategoryHolder extends RecyclerView.ViewHolder {
 
+        public long id;
         public RadioButton selectButton;
         public TextView nameTextView;
         public ImageButton removeButton;

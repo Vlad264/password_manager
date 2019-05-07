@@ -52,7 +52,7 @@ public class EmailDBHandler extends SQLiteOpenHelper implements ISimpleDBHandler
     }
 
     @Override
-    public void update(int id, Email category) {
+    public void update(long id, Email category) {
         SQLiteDatabase db = this.getWritableDatabase();
         db.execSQL(UPDATE, new String[] { category.getEmail(), Long.toString(id) });
         db.close();
@@ -74,7 +74,7 @@ public class EmailDBHandler extends SQLiteOpenHelper implements ISimpleDBHandler
     }
 
     @Override
-    public Email get(int id) {
+    public Email get(long id) {
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery(SELECT_ID, new String[] { Long.toString(id) });
         if (cursor.moveToNext()) {
@@ -101,7 +101,7 @@ public class EmailDBHandler extends SQLiteOpenHelper implements ISimpleDBHandler
     }
 
     @Override
-    public void delete(int id) {
+    public void delete(long id) {
         SQLiteDatabase db = this.getWritableDatabase();
         db.execSQL(DELETE, new String[] { Long.toString(id) });
         db.close();

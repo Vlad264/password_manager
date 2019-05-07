@@ -4,10 +4,10 @@ import java.util.List;
 
 public interface ISimpleDBHandler<T> {
     void add(T value);
-    void update(int id, T value);
+    void update(long id, T value);
     long has(T value);
-    T get(int id);
+    T get(long id);
     List<T> getAll();
-    void delete(int id);
+    void delete(long id);
     void deleteAll();
 }

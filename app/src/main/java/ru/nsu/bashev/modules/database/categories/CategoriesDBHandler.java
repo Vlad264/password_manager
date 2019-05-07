@@ -11,7 +11,7 @@ import java.util.List;
 import ru.nsu.bashev.model.Category;
 import ru.nsu.bashev.modules.base.ISimpleDBHandler;
 
-public class CategoriesDBHandler extends SQLiteOpenHelper implements ISimpleDBHandler<Category> {
+public class CategoriesDBHandler extends SQLiteOpenHelper implements ICategoriesDBHandler {
     private static final int VERSION = 1;
 
     public static final String TABLE_NAME = "categories";
@@ -52,7 +52,7 @@ public class CategoriesDBHandler extends SQLiteOpenHelper implements ISimpleDBHa
     }
 
     @Override
-    public void update(int id, Category category) {
+    public void update(long id, Category category) {
         SQLiteDatabase db = this.getWritableDatabase();
         db.execSQL(UPDATE, new String[] { category.getName(), Long.toString(id) });
         db.close();
@@ -74,7 +74,7 @@ public class CategoriesDBHandler extends SQLiteOpenHelper implements ISimpleDBHa
     }
 
     @Override
-    public Category get(int id) {
+    public Category get(long id) {
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery(SELECT_ID, new String[] { Long.toString(id) });
         if (cursor.moveToNext()) {
@@ -101,7 +101,7 @@ public class CategoriesDBHandler extends SQLiteOpenHelper implements ISimpleDBHa
     }
 
     @Override
-    public void delete(int id) {
+    public void delete(long id) {
         SQLiteDatabase db = this.getWritableDatabase();
         db.execSQL(DELETE, new String[] { Long.toString(id) });
         db.close();
