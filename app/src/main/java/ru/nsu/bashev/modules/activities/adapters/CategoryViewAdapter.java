@@ -1,6 +1,7 @@
 package ru.nsu.bashev.modules.activities.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,7 +14,9 @@ import java.util.List;
 
 import ru.nsu.bashev.R;
 import ru.nsu.bashev.model.Category;
+import ru.nsu.bashev.modules.activities.editCategory.EditCategoryActivity;
 import ru.nsu.bashev.modules.activities.navigation.categoriesList.ICategoriesListPresenter;
+import ru.nsu.bashev.modules.activities.viewAccount.ViewAccountActivity;
 
 public class CategoryViewAdapter extends RecyclerView.Adapter<CategoryViewAdapter.CategoryHolder> {
 
@@ -49,6 +52,15 @@ public class CategoryViewAdapter extends RecyclerView.Adapter<CategoryViewAdapte
             @Override
             public void onClick(View v) {
                 presenter.removeCategory(categoryHolder.id);
+            }
+        });
+
+        categoryHolder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, EditCategoryActivity.class);
+                intent.putExtra("ID", categoryHolder.id);
+                context.startActivity(intent);
             }
         });
     }
