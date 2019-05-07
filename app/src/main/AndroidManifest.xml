@@ -20,5 +20,6 @@
         <activity android:name=".modules.activities.navigation.NavigationActivity"/>
         <activity android:name=".modules.activities.createAccount.CreateAccountActivity"/>
         <activity android:name=".modules.activities.viewAccount.ViewAccountActivity"/>
+        <activity android:name=".modules.activities.editAccount.EditAccountActivity"/>
     </application>
 </manifest>

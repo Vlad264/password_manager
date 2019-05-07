@@ -54,7 +54,8 @@ public class EnterFragment extends Fragment implements IEnterView {
 
     @Override
     public void showName(String name) {
-        greeting.append(", " + name);
+        String str = getResources().getString(R.string.greeting) + ", " + name;
+        greeting.setText(str);
     }
 
     @Override

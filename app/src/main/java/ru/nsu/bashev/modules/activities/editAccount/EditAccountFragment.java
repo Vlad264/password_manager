@@ -8,8 +8,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
+
+import java.util.LinkedList;
 
 import ru.nsu.bashev.R;
+import ru.nsu.bashev.model.Account;
+import ru.nsu.bashev.model.Category;
+import ru.nsu.bashev.model.Email;
+import ru.nsu.bashev.model.Login;
+import ru.nsu.bashev.model.Password;
 import ru.nsu.bashev.modules.activities.adapters.SelectCategoriesAdapter;
 
 public class EditAccountFragment extends Fragment implements IEditAccountView {
@@ -40,14 +48,19 @@ public class EditAccountFragment extends Fragment implements IEditAccountView {
         cancelButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //TODO add handler
+                getActivity().finish();
             }
         });
         saveButton = view.findViewById(R.id.accountSaveButton);
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //TODO add handler
+                presenter.saveAccount(new Account(nameEditText.getText().toString(),
+                        descriptionEditText.getText().toString(),
+                        new Password(passwordEditText.getText().toString()),
+                        emailEditText.getText().toString().isEmpty() ? null : new Email(emailEditText.getText().toString()),
+                        loginEditText.getText().toString().isEmpty() ? null : new Login(loginEditText.getText().toString()),
+                        new LinkedList<Category>()));
             }
         });
 
@@ -63,5 +76,28 @@ public class EditAccountFragment extends Fragment implements IEditAccountView {
     @Override
     public void setPresenter(IEditAccountPresenter presenter) {
         this.presenter = presenter;
+    }
+
+    @Override
+    public void success() {
+        getActivity().finish();
+    }
+
+    @Override
+    public void error() {
+        Toast.makeText(getContext(), "Field must be fill", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void showInfo(Account account) {
+        nameEditText.setText(account.getName());
+        if (account.hasLogin()) {
+            loginEditText.setText(account.getLogin().getLogin());
+        }
+        if (account.hasEmail()) {
+            emailEditText.setText(account.getEmail().getEmail());
+        }
+        passwordEditText.setText(account.getPassword().getPassword());
+        descriptionEditText.setText(account.getDescription());
     }
 }

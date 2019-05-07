@@ -133,7 +133,30 @@ public class AccountDBHandler extends SQLiteOpenHelper implements IAccountDBHand
     @Override
     public void updateAccount(long id, Account account) {
         SQLiteDatabase db = this.getWritableDatabase();
-        db.execSQL(UPDATE, new String[] {});
+        long password_id = passwordDBHandler.has(account.getPassword());
+        if (password_id == -1) {
+            passwordDBHandler.add(account.getPassword());
+            password_id = passwordDBHandler.has(account.getPassword());
+        }
+        db.execSQL(UPDATE, new String[] { account.getName(), account.getDescription(), Long.toString(password_id), Long.toString(id)});
+        for (Category c : account.getCategories()) {
+            AccountCategory.addConnect(db, id, c.getId());
+        }
+        if (account.hasEmail()) {
+            long emailId = emailDBHandler.has(account.getEmail());
+            if (emailId == -1) {
+                emailDBHandler.add(account.getEmail());
+            }
+            AccountEmail.addConnect(db, id, emailId);
+        }
+        if (account.hasLogin()) {
+            long loginId = loginDBHandler.has(account.getLogin());
+            if (loginId == -1) {
+                loginDBHandler.add(account.getLogin());
+            }
+            AccountLogin.addConnect(db, id, loginId);
+        }
+        db.close();
     }
 
     @Override
