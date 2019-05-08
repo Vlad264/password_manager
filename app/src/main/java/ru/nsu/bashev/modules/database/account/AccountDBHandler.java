@@ -61,25 +61,32 @@ public class AccountDBHandler extends SQLiteOpenHelper implements IAccountDBHand
                 + KEY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,"
                 + KEY_NAME + " TEXT,"
                 + KEY_DESC + " TEXT,"
-                + KEY_PASSWORD_ID + " TEXT" + ")";
+                + KEY_PASSWORD_ID + " TEXT,"
+                + "FOREIGN KEY (" + KEY_PASSWORD_ID + ") REFERENCES " + PasswordDBHandler.TABLE_NAME + " (" + PasswordDBHandler.KEY_ID + "))";
         db.execSQL(CREATE_TABLE);
 
         CREATE_TABLE = "CREATE TABLE " + AccountCategory.TABLE_NAME + "("
                 + AccountCategory.KEY_ACCOUNT_ID + " INTEGER NOT NULL,"
                 + AccountCategory.KEY_CATEGORY_ID + " INTEGER NOT NULL,"
-                + "PRIMARY KEY("+ AccountCategory.KEY_ACCOUNT_ID + "," + AccountCategory.KEY_CATEGORY_ID + "))";
+                + "PRIMARY KEY("+ AccountCategory.KEY_ACCOUNT_ID + "," + AccountCategory.KEY_CATEGORY_ID + "),"
+                + "FOREIGN KEY (" + AccountCategory.KEY_ACCOUNT_ID + ") REFERENCES " + TABLE_NAME + " (" + KEY_ID + "),"
+                + "FOREIGN KEY (" + AccountCategory.KEY_CATEGORY_ID + ") REFERENCES " + CategoriesDBHandler.TABLE_NAME + " (" + CategoriesDBHandler.KEY_ID + "))";
         db.execSQL(CREATE_TABLE);
 
         CREATE_TABLE = "CREATE TABLE " + AccountEmail.TABLE_NAME + "("
                 + AccountEmail.KEY_ACCOUNT_ID + " INTEGER NOT NULL,"
                 + AccountEmail.KEY_EMAIL_ID + " INTEGER NOT NULL,"
-                + "PRIMARY KEY("+ AccountEmail.KEY_ACCOUNT_ID + "," + AccountEmail.KEY_EMAIL_ID + "))";
+                + "PRIMARY KEY("+ AccountEmail.KEY_ACCOUNT_ID + "," + AccountEmail.KEY_EMAIL_ID + "),"
+                + "FOREIGN KEY (" + AccountEmail.KEY_ACCOUNT_ID + ") REFERENCES " + TABLE_NAME + " (" + KEY_ID + "),"
+                + "FOREIGN KEY (" + AccountEmail.KEY_EMAIL_ID + ") REFERENCES " + EmailDBHandler.TABLE_NAME + " (" + EmailDBHandler.KEY_ID + "))";
         db.execSQL(CREATE_TABLE);
 
         CREATE_TABLE = "CREATE TABLE " + AccountLogin.TABLE_NAME + "("
                 + AccountLogin.KEY_ACCOUNT_ID + " INTEGER NOT NULL,"
                 + AccountLogin.KEY_LOGIN_ID + " INTEGER NOT NULL,"
-                + "PRIMARY KEY("+ AccountLogin.KEY_ACCOUNT_ID + "," + AccountLogin.KEY_LOGIN_ID + "))";
+                + "PRIMARY KEY("+ AccountLogin.KEY_ACCOUNT_ID + "," + AccountLogin.KEY_LOGIN_ID + "),"
+                + "FOREIGN KEY (" + AccountLogin.KEY_ACCOUNT_ID + ") REFERENCES " + TABLE_NAME + " (" + KEY_ID + "),"
+                + "FOREIGN KEY (" + AccountLogin.KEY_LOGIN_ID + ") REFERENCES " + LoginDBHandler.TABLE_NAME + " (" + LoginDBHandler.KEY_ID + "))";
         db.execSQL(CREATE_TABLE);
     }
 
