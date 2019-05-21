@@ -3,6 +3,9 @@ package ru.nsu.bashev.modules.database.account;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
+import ru.nsu.bashev.model.Email;
+import ru.nsu.bashev.modules.database.email.EmailDBHandler;
+
 class AccountEmail {
     static final String TABLE_NAME = "account_email";
     static final String KEY_ACCOUNT_ID = "account_id";
@@ -24,6 +27,17 @@ class AccountEmail {
         }
         cursor.close();
         return false;
+    }
+
+    static Email getEmail(SQLiteDatabase db, EmailDBHandler emailDBHandler, long id) {
+        Cursor cursor = db.rawQuery(SELECT_ACCOUNT, new String[] { Long.toString(id)});
+        if (!cursor.moveToFirst()) {
+            cursor.close();
+            return null;
+        }
+        long emailId = Long.parseLong(cursor.getString(1));
+        cursor.close();
+        return emailDBHandler.get(emailId);
     }
 
     static void addConnect(SQLiteDatabase db, long accountId, long emailId) {

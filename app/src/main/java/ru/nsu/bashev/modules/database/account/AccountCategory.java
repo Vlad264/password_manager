@@ -3,6 +3,12 @@ package ru.nsu.bashev.modules.database.account;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
+import java.util.LinkedList;
+import java.util.List;
+
+import ru.nsu.bashev.model.Category;
+import ru.nsu.bashev.modules.database.categories.CategoriesDBHandler;
+
 class AccountCategory {
     static final String TABLE_NAME = "account_category";
     static final String KEY_ACCOUNT_ID = "account_id";
@@ -24,6 +30,20 @@ class AccountCategory {
         }
         cursor.close();
         return false;
+    }
+
+    static List<Category> getCategories(SQLiteDatabase db, CategoriesDBHandler categoriesDBHandler, long id) {
+        Cursor cursor = db.rawQuery(SELECT_ACCOUNT, new String[] { Long.toString(id)});
+        if (!cursor.moveToFirst()) {
+            cursor.close();
+            return null;
+        }
+        List<Category> result = new LinkedList<>();
+        do {
+            result.add(categoriesDBHandler.get(Long.parseLong(cursor.getString(1))));
+        } while (cursor.moveToNext());
+        cursor.close();
+        return result;
     }
 
     static void addConnect(SQLiteDatabase db, long accountId, long categoryId) {

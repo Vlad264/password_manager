@@ -171,13 +171,17 @@ public class AccountDBHandler extends SQLiteOpenHelper implements IAccountDBHand
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery(SELECT_ID, new String[] { Long.toString(id)});
         if (cursor.moveToFirst()) {
+            Password  password = passwordDBHandler.get(Long.parseLong(cursor.getString(3)));
+            Email email = AccountEmail.getEmail(db, emailDBHandler, id);
+            Login login = AccountLogin.getLogin(db, loginDBHandler, id);
+            List<Category> categories = AccountCategory.getCategories(db, categoriesDBHandler, id);
             Account result = new Account(Long.parseLong(cursor.getString(0)),
                     cursor.getString(1),
                     cursor.getString(2),
-                    new Password(cursor.getString(3)),
-                    null,
-                    null,
-                    null);
+                    password,
+                    email,
+                    login,
+                    categories);
             cursor.close();
             db.close();
             return result;
@@ -209,15 +213,18 @@ public class AccountDBHandler extends SQLiteOpenHelper implements IAccountDBHand
         Cursor cursor = db.rawQuery(SELECT_ALL, null);
         if (cursor.moveToFirst()) {
             do {
-                Email email = null;
-                Login login = null;
-                result.add(new Account(Long.parseLong(cursor.getString(0)),
+                long id = Long.parseLong(cursor.getString(0));
+                Password  password = passwordDBHandler.get(Long.parseLong(cursor.getString(3)));
+                Email email = AccountEmail.getEmail(db, emailDBHandler, id);
+                Login login = AccountLogin.getLogin(db, loginDBHandler, id);
+                List<Category> categories = AccountCategory.getCategories(db, categoriesDBHandler, id);
+                result.add(new Account(id,
                         cursor.getString(1),
                         cursor.getString(2),
-                        new Password(cursor.getString(3)),
+                        password,
                         email,
                         login,
-                        null));
+                        categories));
             } while (cursor.moveToNext());
         }
         cursor.close();

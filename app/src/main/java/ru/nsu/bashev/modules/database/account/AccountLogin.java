@@ -3,6 +3,9 @@ package ru.nsu.bashev.modules.database.account;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
+import ru.nsu.bashev.model.Login;
+import ru.nsu.bashev.modules.database.login.LoginDBHandler;
+
 class AccountLogin {
     static final String TABLE_NAME = "account_login";
     static final String KEY_ACCOUNT_ID = "account_id";
@@ -24,6 +27,17 @@ class AccountLogin {
         }
         cursor.close();
         return false;
+    }
+
+    static Login getLogin(SQLiteDatabase db, LoginDBHandler loginDBHandler, long id) {
+        Cursor cursor = db.rawQuery(SELECT_ACCOUNT, new String[] { Long.toString(id)});
+        if (!cursor.moveToFirst()) {
+            cursor.close();
+            return null;
+        }
+        long loginId = Long.parseLong(cursor.getString(1));
+        cursor.close();
+        return loginDBHandler.get(loginId);
     }
 
     static void addConnect(SQLiteDatabase db, long accountId, long loginId) {

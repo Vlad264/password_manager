@@ -78,7 +78,10 @@ public class LoginDBHandler extends SQLiteOpenHelper implements ISimpleDBHandler
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery(SELECT_ID, new String[] { Long.toString(id) });
         if (cursor.moveToNext()) {
-            return new Login(Long.parseLong(cursor.getString(0)), cursor.getString(1));
+            Login result = new Login(Long.parseLong(cursor.getString(0)), cursor.getString(1));
+            cursor.close();
+            db.close();
+            return result;
         }
         cursor.close();
         db.close();

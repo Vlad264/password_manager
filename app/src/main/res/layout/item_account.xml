@@ -2,6 +2,7 @@
 <android.support.constraint.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
@@ -19,7 +20,27 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/accountTypeTextView"
+        android:id="@+id/accountEmailTextView"
+        android:text="@string/email"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/accountLoginTextView" />
+
+    <TextView
+        android:id="@+id/accountEmailValueTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:text="login or email example"
+        app:layout_constraintStart_toEndOf="@+id/accountPasswordTextView"
+        app:layout_constraintTop_toBottomOf="@+id/accountLoginValueTextView" />
+
+    <TextView
+        android:id="@+id/accountLoginTextView"
         android:text="@string/login"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -29,7 +50,7 @@
         app:layout_constraintTop_toBottomOf="@+id/accountTitleTextView" />
 
     <TextView
-        android:id="@+id/accountTypeValueTextView3"
+        android:id="@+id/accountLoginValueTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -48,7 +69,7 @@
         android:layout_marginBottom="4dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/accountTypeTextView" />
+        app:layout_constraintTop_toBottomOf="@+id/accountEmailTextView" />
 
     <TextView
         android:id="@+id/accountPasswordValueTextView"
@@ -60,7 +81,7 @@
         android:layout_marginBottom="4dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@+id/accountPasswordTextView"
-        app:layout_constraintTop_toBottomOf="@+id/accountTypeValueTextView3" />
+        app:layout_constraintTop_toBottomOf="@+id/accountEmailValueTextView" />
 
     <ImageButton
         android:id="@+id/accountPasswordCopyImageButton"
