@@ -2,6 +2,7 @@ package ru.nsu.bashev.modules.activities.editAccount;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,6 +12,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import java.util.LinkedList;
+import java.util.List;
 
 import ru.nsu.bashev.R;
 import ru.nsu.bashev.model.Account;
@@ -19,11 +21,12 @@ import ru.nsu.bashev.model.Email;
 import ru.nsu.bashev.model.Login;
 import ru.nsu.bashev.model.Password;
 import ru.nsu.bashev.modules.activities.adapters.NoSelectCategoriesAdapter;
+import ru.nsu.bashev.modules.activities.adapters.SelectCategoriesAdapter;
 
 public class EditAccountFragment extends Fragment implements IEditAccountView {
 
     private IEditAccountPresenter presenter;
-    private NoSelectCategoriesAdapter adapter;
+    private SelectCategoriesAdapter adapter;
 
     private EditText nameEditText;
     private EditText loginEditText;
@@ -43,7 +46,13 @@ public class EditAccountFragment extends Fragment implements IEditAccountView {
         emailEditText = view.findViewById(R.id.emailValueEditText);
         passwordEditText = view.findViewById(R.id.passwordValueEditText);
         descriptionEditText = view.findViewById(R.id.descriptionValueEditText);
+
         selectCategoriesRecyclerView = view.findViewById(R.id.categoriesSelectRecycleView);
+        LinearLayoutManager manager = new LinearLayoutManager(getActivity());
+        selectCategoriesRecyclerView.setLayoutManager(manager);
+        adapter = new SelectCategoriesAdapter(new LinkedList<Category>());
+        selectCategoriesRecyclerView.setAdapter(adapter);
+
         cancelButton = view.findViewById(R.id.accountCancelButton);
         cancelButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -60,7 +69,7 @@ public class EditAccountFragment extends Fragment implements IEditAccountView {
                         new Password(passwordEditText.getText().toString()),
                         emailEditText.getText().toString().isEmpty() ? null : new Email(emailEditText.getText().toString()),
                         loginEditText.getText().toString().isEmpty() ? null : new Login(loginEditText.getText().toString()),
-                        new LinkedList<Category>()));
+                        adapter.getSelectedCategories()));
             }
         });
 
@@ -99,5 +108,13 @@ public class EditAccountFragment extends Fragment implements IEditAccountView {
         }
         passwordEditText.setText(account.getPassword().getPassword());
         descriptionEditText.setText(account.getDescription());
+    }
+
+    @Override
+    public void showCategories(List<Category> categories) {
+        if (categories != null) {
+            adapter = new SelectCategoriesAdapter(categories);
+            selectCategoriesRecyclerView.setAdapter(adapter);
+        }
     }
 }

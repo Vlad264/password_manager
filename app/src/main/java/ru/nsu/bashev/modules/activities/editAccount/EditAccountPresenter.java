@@ -5,6 +5,7 @@ import ru.nsu.bashev.common.useCaseEngine.UseCaseHandler;
 import ru.nsu.bashev.model.Account;
 import ru.nsu.bashev.modules.database.account.IAccountDBHandler;
 import ru.nsu.bashev.modules.useCases.LoadAccount;
+import ru.nsu.bashev.modules.useCases.LoadCategoriesWithSelect;
 import ru.nsu.bashev.modules.useCases.UpdateAccount;
 
 public class EditAccountPresenter implements IEditAccountPresenter {
@@ -24,11 +25,24 @@ public class EditAccountPresenter implements IEditAccountPresenter {
     @Override
     public void start() {
         LoadAccount loadAccount = new LoadAccount(accountDBHandler);
-        LoadAccount.RequestValues request = new LoadAccount.RequestValues(id);
-        handler.execute(loadAccount, request, new IUseCaseCallback<LoadAccount.ResponseValues>() {
+        LoadAccount.RequestValues requestAccount = new LoadAccount.RequestValues(id);
+        handler.execute(loadAccount, requestAccount, new IUseCaseCallback<LoadAccount.ResponseValues>() {
             @Override
             public void onSuccess(LoadAccount.ResponseValues response) {
                 view.showInfo(response.getAccounts());
+                LoadCategoriesWithSelect loadCategoriesWithSelect = new LoadCategoriesWithSelect(accountDBHandler);
+                LoadCategoriesWithSelect.RequestValues requestCategories = new LoadCategoriesWithSelect.RequestValues(id);
+                handler.execute(loadCategoriesWithSelect, requestCategories, new IUseCaseCallback<LoadCategoriesWithSelect.ResponseValues>() {
+                    @Override
+                    public void onSuccess(LoadCategoriesWithSelect.ResponseValues response) {
+                        view.showCategories(response.getCategories());
+                    }
+
+                    @Override
+                    public void onError() {
+
+                    }
+                });
             }
 
             @Override

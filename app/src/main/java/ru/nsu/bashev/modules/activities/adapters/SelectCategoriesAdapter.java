@@ -7,16 +7,17 @@ import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.TextView;
 
+import java.util.LinkedList;
 import java.util.List;
 
 import ru.nsu.bashev.R;
 import ru.nsu.bashev.model.Category;
 
-public class NoSelectCategoriesAdapter extends RecyclerView.Adapter<NoSelectCategoriesAdapter.CategoryHolder> {
+public class SelectCategoriesAdapter extends RecyclerView.Adapter<SelectCategoriesAdapter.CategoryHolder> {
 
     private List<Category> categories;
 
-    public NoSelectCategoriesAdapter(List<Category> categories) {
+    public SelectCategoriesAdapter(List<Category> categories) {
         this.categories = categories;
     }
 
@@ -29,8 +30,17 @@ public class NoSelectCategoriesAdapter extends RecyclerView.Adapter<NoSelectCate
     }
 
     @Override
-    public void onBindViewHolder(CategoryHolder categoryHolder, int i) {
+    public void onBindViewHolder(final CategoryHolder categoryHolder, int i) {
+        final int index = i;
+        categoryHolder.id = categories.get(i).getId();
         categoryHolder.nameTextView.setText(categories.get(i).getName());
+        categoryHolder.selectButton.setChecked(categories.get(i).isSelected());
+        categoryHolder.selectButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                categories.get(index).setSelected(categoryHolder.selectButton.isChecked());
+            }
+        });
     }
 
     @Override
@@ -38,15 +48,27 @@ public class NoSelectCategoriesAdapter extends RecyclerView.Adapter<NoSelectCate
         return categories.size();
     }
 
+    public List<Category> getSelectedCategories() {
+        List<Category> result = new LinkedList<>();
+        for (Category c : categories) {
+            if (c.isSelected()) {
+                result.add(c);
+            }
+        }
+        return result;
+    }
+
     public static final class CategoryHolder extends RecyclerView.ViewHolder {
 
+        public long id;
+        public CheckBox selectButton;
         public TextView nameTextView;
 
         public CategoryHolder(View itemView) {
             super(itemView);
+            selectButton = itemView.findViewById(R.id.categorySelectCheckBox);
             nameTextView = itemView.findViewById(R.id.categoryNameTextView);
             itemView.findViewById(R.id.categoryRemoveImageButton).setVisibility(View.GONE);
-            itemView.findViewById(R.id.categorySelectCheckBox).setVisibility(View.GONE);
         }
     }
 }

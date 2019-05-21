@@ -3,6 +3,7 @@ package ru.nsu.bashev.modules.activities.viewAccount;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,15 +12,17 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.LinkedList;
+
 import ru.nsu.bashev.R;
 import ru.nsu.bashev.model.Account;
+import ru.nsu.bashev.model.Category;
 import ru.nsu.bashev.modules.activities.adapters.NoSelectCategoriesAdapter;
 import ru.nsu.bashev.modules.activities.editAccount.EditAccountActivity;
 
 public class ViewAccountFragment extends Fragment implements IViewAccountView {
 
     private IViewAccountPresenter presenter;
-    private NoSelectCategoriesAdapter adapter;
 
     private TextView nameTextView;
     private TextView loginPanel;
@@ -47,7 +50,12 @@ public class ViewAccountFragment extends Fragment implements IViewAccountView {
         emailTextView.setVisibility(View.GONE);
         passwordTextView = view.findViewById(R.id.passwordValueTextView);
         descriptionTextView = view.findViewById(R.id.descriptionValueTextView);
+
         categoriesRecyclerView = view.findViewById(R.id.categoriesRecyclerView);
+        LinearLayoutManager manager = new LinearLayoutManager(getActivity());
+        categoriesRecyclerView.setLayoutManager(manager);
+        categoriesRecyclerView.setAdapter(new NoSelectCategoriesAdapter(new LinkedList<Category>()));
+
         cancelButton = view.findViewById(R.id.accountCancelButton);
         cancelButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -95,6 +103,9 @@ public class ViewAccountFragment extends Fragment implements IViewAccountView {
         }
         passwordTextView.setText(account.getPassword().getPassword());
         descriptionTextView.setText(account.getDescription());
+        if (account.getCategories() != null) {
+            categoriesRecyclerView.setAdapter(new NoSelectCategoriesAdapter(account.getCategories()));
+        }
     }
 
     @Override

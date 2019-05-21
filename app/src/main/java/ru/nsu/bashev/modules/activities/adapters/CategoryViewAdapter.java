@@ -41,12 +41,13 @@ public class CategoryViewAdapter extends RecyclerView.Adapter<CategoryViewAdapte
 
     @Override
     public void onBindViewHolder(final CategoryHolder categoryHolder, int i) {
+        final int index = i;
         categoryHolder.id = categories.get(i).getId();
         categoryHolder.nameTextView.setText(categories.get(i).getName());
         categoryHolder.selectButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                categories.get(index).setSelected(categoryHolder.selectButton.isSelected());
             }
         });
         categoryHolder.removeButton.setOnClickListener(new View.OnClickListener() {

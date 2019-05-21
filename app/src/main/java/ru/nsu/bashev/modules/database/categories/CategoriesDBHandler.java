@@ -78,7 +78,7 @@ public class CategoriesDBHandler extends SQLiteOpenHelper implements ICategories
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery(SELECT_ID, new String[] { Long.toString(id) });
         if (cursor.moveToNext()) {
-            return new Category(Long.parseLong(cursor.getString(0)), cursor.getString(1));
+            return new Category(Long.parseLong(cursor.getString(0)), cursor.getString(1), true);
         }
         cursor.close();
         db.close();

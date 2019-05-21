@@ -10,6 +10,7 @@ public interface IAccountDBHandler {
     void addAccount(Account account);
     void updateAccount(long id, Account account);
     Account getAccount(long id);
+    List<Category> getAllWithSelectedCategories(long id);
     List<Account> getAccountsByTitle(String titile);
     List<Account> getAccountsByEmail(Email email);
     List<Account> getAccountsByLogin(Login login);

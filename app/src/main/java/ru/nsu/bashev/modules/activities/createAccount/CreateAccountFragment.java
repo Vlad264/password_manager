@@ -2,6 +2,7 @@ package ru.nsu.bashev.modules.activities.createAccount;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,6 +11,7 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import java.util.LinkedList;
+import java.util.List;
 
 import ru.nsu.bashev.R;
 import ru.nsu.bashev.model.Account;
@@ -18,11 +20,12 @@ import ru.nsu.bashev.model.Email;
 import ru.nsu.bashev.model.Login;
 import ru.nsu.bashev.model.Password;
 import ru.nsu.bashev.modules.activities.adapters.NoSelectCategoriesAdapter;
+import ru.nsu.bashev.modules.activities.adapters.SelectCategoriesAdapter;
 
 public class CreateAccountFragment extends Fragment implements ICreateAccountView {
 
     private ICreateAccountPresenter presenter;
-    private NoSelectCategoriesAdapter adapter;
+    private SelectCategoriesAdapter adapter;
 
     private EditText nameEditText;
     private EditText loginEditText;
@@ -42,7 +45,13 @@ public class CreateAccountFragment extends Fragment implements ICreateAccountVie
         emailEditText = view.findViewById(R.id.emailValueEditText);
         passwordEditText = view.findViewById(R.id.passwordValueEditText);
         descriptionEditText = view.findViewById(R.id.descriptionValueEditText);
+
         selectCategoriesRecyclerView = view.findViewById(R.id.categoriesSelectRecycleView);
+        LinearLayoutManager manager = new LinearLayoutManager(getActivity());
+        selectCategoriesRecyclerView.setLayoutManager(manager);
+        adapter = new SelectCategoriesAdapter(new LinkedList<Category>());
+        selectCategoriesRecyclerView.setAdapter(adapter);
+
         cancelButton = view.findViewById(R.id.accountCancelButton);
         cancelButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -73,6 +82,12 @@ public class CreateAccountFragment extends Fragment implements ICreateAccountVie
     }
 
     @Override
+    public void showCategories(List<Category> categories) {
+        adapter = new SelectCategoriesAdapter(categories);
+        selectCategoriesRecyclerView.setAdapter(adapter);
+    }
+
+    @Override
     public void close() {
         getActivity().finish();
     }
@@ -83,6 +98,6 @@ public class CreateAccountFragment extends Fragment implements ICreateAccountVie
                 new Password(passwordEditText.getText().toString()),
                 emailEditText.getText().toString().isEmpty() ? null : new Email(emailEditText.getText().toString()),
                 loginEditText.getText().toString().isEmpty() ? null : new Login(loginEditText.getText().toString()),
-                new LinkedList<Category>()));
+                adapter.getSelectedCategories()));
     }
 }

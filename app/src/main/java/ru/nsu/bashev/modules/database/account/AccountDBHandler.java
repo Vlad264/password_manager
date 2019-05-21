@@ -146,9 +146,11 @@ public class AccountDBHandler extends SQLiteOpenHelper implements IAccountDBHand
             password_id = passwordDBHandler.has(account.getPassword());
         }
         db.execSQL(UPDATE, new String[] { account.getName(), account.getDescription(), Long.toString(password_id), Long.toString(id)});
+        AccountCategory.deleteConnect(db, id);
         for (Category c : account.getCategories()) {
             AccountCategory.addConnect(db, id, c.getId());
         }
+        AccountEmail.deleteConnect(db, id);
         if (account.hasEmail()) {
             long emailId = emailDBHandler.has(account.getEmail());
             if (emailId == -1) {
@@ -156,6 +158,7 @@ public class AccountDBHandler extends SQLiteOpenHelper implements IAccountDBHand
             }
             AccountEmail.addConnect(db, id, emailId);
         }
+        AccountLogin.deleteConnect(db, id);
         if (account.hasLogin()) {
             long loginId = loginDBHandler.has(account.getLogin());
             if (loginId == -1) {
@@ -189,6 +192,23 @@ public class AccountDBHandler extends SQLiteOpenHelper implements IAccountDBHand
         cursor.close();
         db.close();
         return null;
+    }
+
+    @Override
+    public List<Category> getAllWithSelectedCategories(long id) {
+        List<Category> result = categoriesDBHandler.getAll();
+        SQLiteDatabase db = this.getWritableDatabase();
+        List<Category> selected = AccountCategory.getCategories(db, categoriesDBHandler, id);
+        db.close();
+        for (Category c : selected) {
+            for (Category r : result) {
+                if (c.getId() == r.getId()) {
+                    r.setSelected(true);
+                    break;
+                }
+            }
+        }
+        return result;
     }
 
     @Override
