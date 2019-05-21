@@ -14,9 +14,6 @@ import android.widget.Toast;
 import ru.nsu.bashev.R;
 import ru.nsu.bashev.modules.activities.navigation.NavigationActivity;
 import ru.nsu.bashev.modules.activities.registration.RegistrationActivity;
-import ru.nsu.bashev.modules.example.IExamplePresenter;
-import ru.nsu.bashev.modules.example.IExampleView;
-
 public class EnterFragment extends Fragment implements IEnterView {
 
     private IEnterPresenter presenter;

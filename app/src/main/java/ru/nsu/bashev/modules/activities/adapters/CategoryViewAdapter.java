@@ -6,6 +6,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
 import android.widget.ImageButton;
 import android.widget.RadioButton;
 import android.widget.TextView;
@@ -73,13 +74,13 @@ public class CategoryViewAdapter extends RecyclerView.Adapter<CategoryViewAdapte
     public static final class CategoryHolder extends RecyclerView.ViewHolder {
 
         public long id;
-        public RadioButton selectButton;
+        public CheckBox selectButton;
         public TextView nameTextView;
         public ImageButton removeButton;
 
         public CategoryHolder(View itemView) {
             super(itemView);
-            selectButton = itemView.findViewById(R.id.categorySelectRadioButton);
+            selectButton = itemView.findViewById(R.id.categorySelectCheckBox);
             nameTextView = itemView.findViewById(R.id.categoryNameTextView);
             removeButton = itemView.findViewById(R.id.categoryRemoveImageButton);
         }

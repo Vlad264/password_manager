@@ -8,22 +8,18 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import ru.nsu.bashev.R;
 import ru.nsu.bashev.model.Account;
-import ru.nsu.bashev.modules.activities.adapters.SelectCategoriesAdapter;
+import ru.nsu.bashev.modules.activities.adapters.NoSelectCategoriesAdapter;
 import ru.nsu.bashev.modules.activities.editAccount.EditAccountActivity;
-import ru.nsu.bashev.modules.activities.editAccount.IEditAccountPresenter;
-import ru.nsu.bashev.modules.activities.editAccount.IEditAccountView;
-import ru.nsu.bashev.modules.activities.navigation.NavigationActivity;
 
 public class ViewAccountFragment extends Fragment implements IViewAccountView {
 
     private IViewAccountPresenter presenter;
-    private SelectCategoriesAdapter adapter;
+    private NoSelectCategoriesAdapter adapter;
 
     private TextView nameTextView;
     private TextView loginPanel;

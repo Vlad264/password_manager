@@ -30,7 +30,7 @@
     <string-array name="search_type">
         <item>Название</item>
         <item>Логин</item>
-        <item>email</item>
+        <item>Email</item>
     </string-array>
 
 </resources>

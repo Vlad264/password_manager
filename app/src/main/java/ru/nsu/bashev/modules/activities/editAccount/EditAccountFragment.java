@@ -18,12 +18,12 @@ import ru.nsu.bashev.model.Category;
 import ru.nsu.bashev.model.Email;
 import ru.nsu.bashev.model.Login;
 import ru.nsu.bashev.model.Password;
-import ru.nsu.bashev.modules.activities.adapters.SelectCategoriesAdapter;
+import ru.nsu.bashev.modules.activities.adapters.NoSelectCategoriesAdapter;
 
 public class EditAccountFragment extends Fragment implements IEditAccountView {
 
     private IEditAccountPresenter presenter;
-    private SelectCategoriesAdapter adapter;
+    private NoSelectCategoriesAdapter adapter;
 
     private EditText nameEditText;
     private EditText loginEditText;

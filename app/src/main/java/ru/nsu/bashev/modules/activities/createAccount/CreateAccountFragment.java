@@ -1,6 +1,5 @@
 package ru.nsu.bashev.modules.activities.createAccount;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.RecyclerView;
@@ -18,13 +17,12 @@ import ru.nsu.bashev.model.Category;
 import ru.nsu.bashev.model.Email;
 import ru.nsu.bashev.model.Login;
 import ru.nsu.bashev.model.Password;
-import ru.nsu.bashev.modules.activities.adapters.SelectCategoriesAdapter;
-import ru.nsu.bashev.modules.activities.navigation.NavigationActivity;
+import ru.nsu.bashev.modules.activities.adapters.NoSelectCategoriesAdapter;
 
 public class CreateAccountFragment extends Fragment implements ICreateAccountView {
 
     private ICreateAccountPresenter presenter;
-    private SelectCategoriesAdapter adapter;
+    private NoSelectCategoriesAdapter adapter;
 
     private EditText nameEditText;
     private EditText loginEditText;
