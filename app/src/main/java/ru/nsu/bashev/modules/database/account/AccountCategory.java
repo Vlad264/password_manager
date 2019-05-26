@@ -50,7 +50,7 @@ class AccountCategory {
     static List<Long> getAccounts(SQLiteDatabase db, long id) {
         List<Long> result = new LinkedList<>();
         Cursor cursor = db.rawQuery(SELECT_CATEGORY, new String[] { Long.toString(id)});
-        if (!cursor.moveToFirst()) {
+        if (cursor.moveToFirst()) {
             do {
                 result.add(Long.parseLong(cursor.getString(0)));
             } while (cursor.moveToNext());

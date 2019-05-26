@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Toast;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -38,7 +39,7 @@ public class CategoriesListFragment extends Fragment implements ICategoriesListV
         searchByCategoryButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //TODO add handler
+                presenter.searchByCategories(adapter.getSelectedCategories());
             }
         });
         categoryAddFloatingActionButton = view.findViewById(R.id.categoryAddFloatingActionButton);
@@ -52,7 +53,8 @@ public class CategoriesListFragment extends Fragment implements ICategoriesListV
 
         LinearLayoutManager manager = new LinearLayoutManager(getActivity());
         categoriesRecyclerView.setLayoutManager(manager);
-        categoriesRecyclerView.setAdapter(new CategoryViewAdapter(getContext(), new LinkedList<Category>(), presenter));
+        adapter = new CategoryViewAdapter(getContext(), new LinkedList<Category>(), presenter);
+        categoriesRecyclerView.setAdapter(adapter);
 
         return view;
     }
@@ -70,6 +72,12 @@ public class CategoriesListFragment extends Fragment implements ICategoriesListV
 
     @Override
     public void showCategories(List<Category> categories) {
-        categoriesRecyclerView.setAdapter(new CategoryViewAdapter(getContext(), categories, presenter));
+        adapter = new CategoryViewAdapter(getContext(), categories, presenter);
+        categoriesRecyclerView.setAdapter(adapter);
+    }
+
+    @Override
+    public void showNothing() {
+        Toast.makeText(getContext(), "Nothing found", Toast.LENGTH_SHORT).show();
     }
 }

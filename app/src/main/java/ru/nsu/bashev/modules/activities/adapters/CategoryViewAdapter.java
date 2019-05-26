@@ -11,6 +11,7 @@ import android.widget.ImageButton;
 import android.widget.RadioButton;
 import android.widget.TextView;
 
+import java.util.LinkedList;
 import java.util.List;
 
 import ru.nsu.bashev.R;
@@ -47,7 +48,7 @@ public class CategoryViewAdapter extends RecyclerView.Adapter<CategoryViewAdapte
         categoryHolder.selectButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                categories.get(index).setSelected(categoryHolder.selectButton.isSelected());
+                categories.get(index).setSelected(categoryHolder.selectButton.isChecked());
             }
         });
         categoryHolder.removeButton.setOnClickListener(new View.OnClickListener() {
@@ -70,6 +71,16 @@ public class CategoryViewAdapter extends RecyclerView.Adapter<CategoryViewAdapte
     @Override
     public int getItemCount() {
         return categories.size();
+    }
+
+    public List<Category> getSelectedCategories() {
+        List<Category> result = new LinkedList<>();
+        for (Category c : categories) {
+            if (c.isSelected()) {
+                result.add(c);
+            }
+        }
+        return result;
     }
 
     public static final class CategoryHolder extends RecyclerView.ViewHolder {

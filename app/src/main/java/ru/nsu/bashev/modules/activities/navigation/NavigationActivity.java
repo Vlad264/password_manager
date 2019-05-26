@@ -12,17 +12,15 @@ import ru.nsu.bashev.modules.database.categories.ICategoriesDBHandler;
 public class NavigationActivity extends SwapFragmentActivity {
 
     private IAccountDBHandler accountDBHandler;
-    private ICategoriesDBHandler categoriesDBHandler;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         accountDBHandler = new AccountDBHandler(this);
-        categoriesDBHandler = accountDBHandler.getCategoriesDBHandler();
         super.onCreate(savedInstanceState);
     }
 
     @Override
     protected FragmentPagerAdapter createFragmentPagerAdapter() {
-        return new NavigationFragmentAdapter(getSupportFragmentManager(), UseCaseHandler.getInstance(), accountDBHandler, categoriesDBHandler);
+        return new NavigationFragmentAdapter(getSupportFragmentManager(), viewPager, UseCaseHandler.getInstance(), accountDBHandler);
     }
 }
