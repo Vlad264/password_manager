@@ -6,8 +6,10 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Set;
 
 import ru.nsu.bashev.model.Account;
 import ru.nsu.bashev.model.Category;
@@ -270,7 +272,7 @@ public class AccountDBHandler extends SQLiteOpenHelper implements IAccountDBHand
     @Override
     public List<Account> getAccountsByCategories(List<Category> categories) {
         List<Account> result = new LinkedList<>();
-        List<Long> accountsId = new LinkedList<>();
+        Set<Long> accountsId = new HashSet<>();
         SQLiteDatabase db = this.getWritableDatabase();
         for (Category c : categories) {
             accountsId.addAll(AccountCategory.getAccounts(db, c.getId()));

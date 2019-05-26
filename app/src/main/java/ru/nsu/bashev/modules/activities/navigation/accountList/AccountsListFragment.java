@@ -28,6 +28,7 @@ public class AccountsListFragment extends Fragment implements IAccountsListView 
 
     private Spinner searchType;
     private EditText searchEditText;
+    private Button resetButton;
     private Button searchButton;
     private RecyclerView accountsRecyclerView;
     private FloatingActionButton accountAddFloatingActionButton;
@@ -44,6 +45,13 @@ public class AccountsListFragment extends Fragment implements IAccountsListView 
         searchType = view.findViewById(R.id.searchType);
         searchEditText = view.findViewById(R.id.searchEditText);
         accountsRecyclerView = view.findViewById(R.id.accountsRecyclerView);
+        resetButton = view.findViewById(R.id.resetButton);
+        resetButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                presenter.start();
+            }
+        });
         searchButton = view.findViewById(R.id.searchButton);
         searchButton.setOnClickListener(new View.OnClickListener() {
             @Override
