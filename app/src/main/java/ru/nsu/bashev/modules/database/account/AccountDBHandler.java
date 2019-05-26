@@ -3,7 +3,6 @@ package ru.nsu.bashev.modules.database.account;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
-import android.database.DatabaseUtils;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
@@ -35,6 +34,7 @@ public class AccountDBHandler extends SQLiteOpenHelper implements IAccountDBHand
 
     private static final String SELECT_ALL = "SELECT * FROM " + TABLE_NAME;
     private static final String SELECT_ID = "SELECT * FROM " + TABLE_NAME + " WHERE " + KEY_ID + "=?";
+    private static final String SELECT_NAME = "SELECT * FROM " + TABLE_NAME + " WHERE " + KEY_NAME + "=?";
 
     private CategoriesDBHandler categoriesDBHandler;
     private EmailDBHandler emailDBHandler;
@@ -212,18 +212,59 @@ public class AccountDBHandler extends SQLiteOpenHelper implements IAccountDBHand
     }
 
     @Override
-    public List<Account> getAccountsByTitle(String titile) {
-        return null;
+    public List<Account> getAccountsByTitle(String title) {
+        List<Account> result = new LinkedList<>();
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery(SELECT_NAME, new String[] { title });
+        if (cursor.moveToFirst()) {
+            do {
+                long id = Long.parseLong(cursor.getString(0));
+                Password  password = passwordDBHandler.get(Long.parseLong(cursor.getString(3)));
+                Email email = AccountEmail.getEmail(db, emailDBHandler, id);
+                Login login = AccountLogin.getLogin(db, loginDBHandler, id);
+                List<Category> categories = AccountCategory.getCategories(db, categoriesDBHandler, id);
+                result.add(new Account(id,
+                        cursor.getString(1),
+                        cursor.getString(2),
+                        password,
+                        email,
+                        login,
+                        categories));
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        db.close();
+        return result;
     }
 
     @Override
     public List<Account> getAccountsByEmail(Email email) {
-        return null;
+        List<Account> result = new LinkedList<>();
+        SQLiteDatabase db = this.getWritableDatabase();
+        long emailId = emailDBHandler.has(email);
+        if (emailId != -1) {
+            List<Long> accounts = AccountEmail.getAccounts(db, emailDBHandler, emailId);
+            for (long i : accounts) {
+                result.add(getAccount(i));
+            }
+        }
+        db.close();
+        return result;
     }
 
     @Override
     public List<Account> getAccountsByLogin(Login login) {
-        return null;
+        List<Account> result = new LinkedList<>();
+        SQLiteDatabase db = this.getWritableDatabase();
+        long loginId = loginDBHandler.has(login);
+        if (loginId != -1) {
+            List<Long> accounts = AccountEmail.getAccounts(db, emailDBHandler, loginId);
+            for (long i : accounts) {
+                result.add(getAccount(i));
+            }
+        }
+        db.close();
+        return result;
     }
 
     @Override

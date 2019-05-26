@@ -99,7 +99,7 @@ public class ViewAccountFragment extends Fragment implements IViewAccountView {
         if (account.hasEmail()) {
             emailPanel.setVisibility(View.VISIBLE);
             emailTextView.setVisibility(View.VISIBLE);
-            emailTextView.setText(account.getLogin().getLogin());
+            emailTextView.setText(account.getEmail().getEmail());
         }
         passwordTextView.setText(account.getPassword().getPassword());
         descriptionTextView.setText(account.getDescription());

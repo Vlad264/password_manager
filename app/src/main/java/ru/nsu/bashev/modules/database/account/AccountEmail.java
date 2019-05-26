@@ -3,6 +3,9 @@ package ru.nsu.bashev.modules.database.account;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
+import java.util.LinkedList;
+import java.util.List;
+
 import ru.nsu.bashev.model.Email;
 import ru.nsu.bashev.modules.database.email.EmailDBHandler;
 
@@ -38,6 +41,18 @@ class AccountEmail {
         long emailId = Long.parseLong(cursor.getString(1));
         cursor.close();
         return emailDBHandler.get(emailId);
+    }
+
+    static List<Long> getAccounts(SQLiteDatabase db, EmailDBHandler emailDBHandler, long id) {
+        List<Long> result = new LinkedList<>();
+        Cursor cursor = db.rawQuery(SELECT_EMAIL, new String[] { Long.toString(id)});
+        if (!cursor.moveToFirst()) {
+            do {
+                result.add(Long.parseLong(cursor.getString(0)));
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        return result;
     }
 
     static void addConnect(SQLiteDatabase db, long accountId, long emailId) {
