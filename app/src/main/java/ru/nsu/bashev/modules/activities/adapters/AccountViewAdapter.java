@@ -1,5 +1,7 @@
 package ru.nsu.bashev.modules.activities.adapters;
 
+import android.content.ClipData;
+import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
@@ -8,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.List;
 
@@ -38,7 +41,7 @@ public class AccountViewAdapter extends RecyclerView.Adapter<AccountViewAdapter.
 
     @Override
     public void onBindViewHolder(final AccountHolder accountHolder, int i) {
-        Account account = accounts.get(i);
+        final Account account = accounts.get(i);
         accountHolder.id = account.getId();
         accountHolder.title.setText(account.getName());
         if (account.hasEmail()) {
@@ -53,7 +56,20 @@ public class AccountViewAdapter extends RecyclerView.Adapter<AccountViewAdapter.
             accountHolder.loginPlane.setVisibility(View.GONE);
             accountHolder.loginValue.setVisibility(View.GONE);
         }
-        accountHolder.password.setText(account.getPassword().getPassword());
+        String password = "";
+        for (int j = 0; j < account.getPassword().getPassword().length(); j++) {
+            password += "*";
+        }
+        accountHolder.password.setText(password);
+        accountHolder.copyButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ClipboardManager manager = (ClipboardManager) context.getSystemService(Context.CLIPBOARD_SERVICE);
+                ClipData clipData = ClipData.newPlainText("Password", account.getPassword().getPassword());
+                manager.setPrimaryClip(clipData);
+                Toast.makeText(context, "Password save to clipboard", Toast.LENGTH_SHORT).show();
+            }
+        });
         accountHolder.removeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -84,6 +100,7 @@ public class AccountViewAdapter extends RecyclerView.Adapter<AccountViewAdapter.
         public TextView emailPlane;
         public TextView emailValue;
         public TextView password;
+        public ImageButton copyButton;
         public ImageButton removeButton;
 
         public AccountHolder(View itemView) {
@@ -94,6 +111,7 @@ public class AccountViewAdapter extends RecyclerView.Adapter<AccountViewAdapter.
             emailPlane = itemView.findViewById(R.id.accountEmailTextView);
             emailValue = itemView.findViewById(R.id.accountEmailValueTextView);
             password = itemView.findViewById(R.id.accountPasswordValueTextView);
+            copyButton = itemView.findViewById(R.id.accountPasswordCopyImageButton);
             removeButton = itemView.findViewById(R.id.accountRemoveImageButton);
         }
     }
