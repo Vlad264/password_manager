@@ -8,6 +8,7 @@ import java.util.List;
 
 import ru.nsu.bashev.model.Category;
 import ru.nsu.bashev.modules.database.categories.CategoriesDBHandler;
+import ru.nsu.bashev.modules.database.email.EmailDBHandler;
 
 class AccountCategory {
     static final String TABLE_NAME = "account_category";
@@ -42,6 +43,18 @@ class AccountCategory {
         do {
             result.add(categoriesDBHandler.get(Long.parseLong(cursor.getString(1))));
         } while (cursor.moveToNext());
+        cursor.close();
+        return result;
+    }
+
+    static List<Long> getAccounts(SQLiteDatabase db, long id) {
+        List<Long> result = new LinkedList<>();
+        Cursor cursor = db.rawQuery(SELECT_CATEGORY, new String[] { Long.toString(id)});
+        if (!cursor.moveToFirst()) {
+            do {
+                result.add(Long.parseLong(cursor.getString(0)));
+            } while (cursor.moveToNext());
+        }
         cursor.close();
         return result;
     }

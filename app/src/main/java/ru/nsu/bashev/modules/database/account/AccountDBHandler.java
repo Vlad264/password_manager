@@ -243,7 +243,7 @@ public class AccountDBHandler extends SQLiteOpenHelper implements IAccountDBHand
         SQLiteDatabase db = this.getWritableDatabase();
         long emailId = emailDBHandler.has(email);
         if (emailId != -1) {
-            List<Long> accounts = AccountEmail.getAccounts(db, emailDBHandler, emailId);
+            List<Long> accounts = AccountEmail.getAccounts(db, emailId);
             for (long i : accounts) {
                 result.add(getAccount(i));
             }
@@ -258,10 +258,25 @@ public class AccountDBHandler extends SQLiteOpenHelper implements IAccountDBHand
         SQLiteDatabase db = this.getWritableDatabase();
         long loginId = loginDBHandler.has(login);
         if (loginId != -1) {
-            List<Long> accounts = AccountEmail.getAccounts(db, emailDBHandler, loginId);
+            List<Long> accounts = AccountEmail.getAccounts(db, loginId);
             for (long i : accounts) {
                 result.add(getAccount(i));
             }
+        }
+        db.close();
+        return result;
+    }
+
+    @Override
+    public List<Account> getAccountsByCategories(List<Category> categories) {
+        List<Account> result = new LinkedList<>();
+        List<Long> accountsId = new LinkedList<>();
+        SQLiteDatabase db = this.getWritableDatabase();
+        for (Category c : categories) {
+            accountsId.addAll(AccountCategory.getAccounts(db, c.getId()));
+        }
+        for (long i : accountsId) {
+            result.add(getAccount(i));
         }
         db.close();
         return result;

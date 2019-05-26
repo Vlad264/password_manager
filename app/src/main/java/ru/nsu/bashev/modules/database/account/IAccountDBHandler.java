@@ -14,6 +14,7 @@ public interface IAccountDBHandler {
     List<Account> getAccountsByTitle(String title);
     List<Account> getAccountsByEmail(Email email);
     List<Account> getAccountsByLogin(Login login);
+    List<Account> getAccountsByCategories(List<Category> categories);
     List<Account> getAllAccounts();
     void deleteAccount(long id);
     void deleteAll();

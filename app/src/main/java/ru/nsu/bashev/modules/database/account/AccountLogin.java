@@ -44,7 +44,7 @@ class AccountLogin {
         return loginDBHandler.get(loginId);
     }
 
-    static List<Long> getAccounts(SQLiteDatabase db, EmailDBHandler emailDBHandler, long id) {
+    static List<Long> getAccounts(SQLiteDatabase db, long id) {
         List<Long> result = new LinkedList<>();
         Cursor cursor = db.rawQuery(SELECT_LOGIN, new String[] { Long.toString(id)});
         if (!cursor.moveToFirst()) {
