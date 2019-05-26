@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -24,7 +25,6 @@ import ru.nsu.bashev.modules.activities.createAccount.CreateAccountActivity;
 public class AccountsListFragment extends Fragment implements IAccountsListView {
 
     private IAccountsListPresenter presenter;
-    private AccountViewAdapter adapter;
 
     private Spinner searchType;
     private EditText searchEditText;
@@ -48,7 +48,7 @@ public class AccountsListFragment extends Fragment implements IAccountsListView 
         searchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //TODO add handle
+                search();
             }
         });
 
@@ -83,5 +83,30 @@ public class AccountsListFragment extends Fragment implements IAccountsListView 
     @Override
     public void showAccounts(List<Account> accounts) {
         accountsRecyclerView.setAdapter(new AccountViewAdapter(getContext(), presenter, accounts));
+    }
+
+    @Override
+    public void showNothing() {
+        Toast.makeText(getContext(), "Nothing found", Toast.LENGTH_SHORT).show();
+    }
+
+    private void search() {
+        if (searchEditText.getText().toString().isEmpty()) {
+            return;
+        }
+        switch ((int) searchType.getSelectedItemId()) {
+            case 0:
+                presenter.searchByTitle(searchEditText.getText().toString());
+                break;
+
+            case 1:
+                presenter.searchByEmail(searchEditText.getText().toString());
+                break;
+
+            case 2:
+                presenter.searchByLogin(searchEditText.getText().toString());
+                break;
+        }
+        searchEditText.setText("");
     }
 }

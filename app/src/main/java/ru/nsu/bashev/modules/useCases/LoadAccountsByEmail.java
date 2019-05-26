@@ -18,7 +18,7 @@ public class LoadAccountsByEmail extends UseCase<LoadAccountsByEmail.RequestValu
     @Override
     protected void executeUseCase(RequestValues requestValues) {
         List<Account> accounts = accountDBHandler.getAccountsByEmail(new Email(requestValues.getEmail()));
-        if (accounts != null) {
+        if (accounts != null && !accounts.isEmpty()) {
             ResponseValues responseValues = new ResponseValues(accounts);
             getUseCaseCallback().onSuccess(responseValues);
         } else {

@@ -29,8 +29,8 @@
 
     <string-array name="search_type">
         <item>Название</item>
-        <item>Логин</item>
         <item>Email</item>
+        <item>Логин</item>
     </string-array>
 
 </resources>

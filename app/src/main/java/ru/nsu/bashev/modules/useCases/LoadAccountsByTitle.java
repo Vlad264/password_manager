@@ -18,7 +18,7 @@ public class LoadAccountsByTitle extends UseCase<LoadAccountsByTitle.RequestValu
     @Override
     protected void executeUseCase(RequestValues requestValues) {
         List<Account> accounts = accountDBHandler.getAccountsByTitle(requestValues.getTitle());
-        if (accounts != null) {
+        if (accounts != null && !accounts.isEmpty()) {
             ResponseValues responseValues = new ResponseValues(accounts);
             getUseCaseCallback().onSuccess(responseValues);
         } else {
@@ -30,7 +30,7 @@ public class LoadAccountsByTitle extends UseCase<LoadAccountsByTitle.RequestValu
 
         private String title;
 
-        public RequestValues(String email) {
+        public RequestValues(String title) {
             this.title = title;
         }
 

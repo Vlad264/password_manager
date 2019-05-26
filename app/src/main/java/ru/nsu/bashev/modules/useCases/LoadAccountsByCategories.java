@@ -18,7 +18,7 @@ public class LoadAccountsByCategories extends UseCase<LoadAccountsByCategories.R
     @Override
     protected void executeUseCase(RequestValues requestValues) {
         List<Account> accounts = accountDBHandler.getAccountsByCategories(requestValues.getCategories());
-        if (accounts != null) {
+        if (accounts != null && !accounts.isEmpty()) {
             ResponseValues responseValues = new ResponseValues(accounts);
             getUseCaseCallback().onSuccess(responseValues);
         } else {
